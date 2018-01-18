@@ -1,0 +1,1 @@
+SUBSYSTEMS=="usb", ATTRS{manufacturer}=="Roboteq", ATTRS{product}=="Motor Controller", SYMLINK+="armadillo2/ROBOTEQ", MODE="0666"

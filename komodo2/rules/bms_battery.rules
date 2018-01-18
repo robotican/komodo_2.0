@@ -1,0 +1,2 @@
+SUBSYSTEMS=="usb", ATTRS{product}=="FT232R USB UART", ATTRS{serial}=="A104OFDO", SYMLINK+="armadillo2/BMS", MODE="0666" # armadillo2 bgu
+SUBSYSTEMS=="usb", ATTRS{product}=="FT232R USB UART", ATTRS{serial}=="A403IKYO", SYMLINK+="armadillo2/BMS", MODE="0666" # armadillo2 c-robotics

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: komodo2_hw
+Description: Description of komodo2_hw
+Version: 0.0.0
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib -lkomodo2_hw
+Requires: bms_interface ric_interface roboteq_control

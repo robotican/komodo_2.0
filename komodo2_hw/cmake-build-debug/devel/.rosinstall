@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/komodo/catkin_ws/src/komodo2/komodo2_hw/cmake-build-debug/devel/setup.sh

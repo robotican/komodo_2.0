@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>ric_interface</name>
+    <version>0.0.0</version>
+    <description>ric_interface package is a driver between ROS and RoboTIcan hardware</description>
+    
+    <maintainer email="support@robotican.net">RobotICan</maintainer>
+    
+    <url type="website">www.robotican.net</url>
+    
+    <license>MIT</license>  
+    
+    <build_depend>roscpp</build_depend> 
+    <buildtool_depend>catkin</buildtool_depend>
+    
+    <export>
+        
+    </export>
+</package>
