@@ -1,6 +1,6 @@
 
-#ifndef ARMADILLO2_HW_ARMADILLO_HW_H
-#define ARMADILLO2_HW_ARMADILLO_HW_H
+#ifndef KOMODO2_HW_KOMODO_HW_H
+#define KOMODO2_HW_KOMODO_HW_H
 
 #include "battery_pub.h"
 #include "ricboard_pub.h"
@@ -14,7 +14,7 @@
 
 namespace komodo2_hw
 {
-    class ArmadilloHW : public hardware_interface::RobotHW
+    class Komodo2HW : public hardware_interface::RobotHW
     {
     private:
 
@@ -48,10 +48,10 @@ namespace komodo2_hw
 
     public:
 
-        ArmadilloHW(ros::NodeHandle &nh);
+        Komodo2HW(ros::NodeHandle &nh);
         void read();
         void write();
     };
 }
 
-#endif //ARMADILLO2_HW_ARMADILLO_HW_H
+#endif //KOMODO2_HW_KOMODO_HW_H

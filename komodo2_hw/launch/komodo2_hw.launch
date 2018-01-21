@@ -18,7 +18,6 @@
         
         <!--ricboard-->
         <param name="load_ric_hw" value="true" />
-        <param name="torso_joint" value="torso_joint" />
         <param name="ric_port" value="/dev/komodo2/RICBOARD" />
         
         <!--battery management system-->

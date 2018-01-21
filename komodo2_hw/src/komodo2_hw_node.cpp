@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "armadillo2_hw_node");
     ros::NodeHandle nh;
 
-    komodo2_hw::ArmadilloHW armadillo_hw(nh);
+    komodo2_hw::Komodo2HW armadillo_hw(nh);
     controller_manager::ControllerManager controller_manager(&armadillo_hw);
 
     ros::AsyncSpinner asyncSpinner(THREADS_NUM);

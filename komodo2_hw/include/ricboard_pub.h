@@ -1,10 +1,9 @@
 
-#ifndef ARMADILLO2_HW_RICBOARD_PUB_H
-#define ARMADILLO2_HW_RICBOARD_PUB_H
+#ifndef KOMODO2_HW_RICBOARD_PUB_H
+#define KOMODO2_HW_RICBOARD_PUB_H
 
 #include <ric_interface/ric_interface.h>
 #include <ric_interface/ric_exception.h>
-#include <filters/low_pass_filter.h>
 #include <ros/ros.h>
 #include <tf/tf.h>
 #include <sensor_msgs/Range.h>
@@ -27,17 +26,6 @@
 #define MAX_RIC_DISCONNECTIONS 5
 #define SERVO_NEUTRAL 1500
 
-struct torso_joint
-{
-    double pos = 0;
-    double vel = 0;
-    double prev_pos = 0;
-    double effort = 0; /* effort stub - not used */
-    double command_effort = 0;
-    std::string joint_name;
-};
-
-
 class RicboardPub
 {
 private:
@@ -51,8 +39,6 @@ private:
 
     ros::Timer ric_pub_timer_,
                ric_dead_timer_;
-    torso_joint torso_;
-    LowPassFilter torso_lpf_;
     ric_interface::RicInterface ric_;
     ros::NodeHandle *nh_;
     boost::thread* t;
@@ -82,10 +68,7 @@ public:
 
     /* functions for ros controller use */
     void read(const ros::Duration elapsed);
-    void write(const ros::Duration elapsed);
-    void registerHandles(hardware_interface::JointStateInterface &joint_state_interface,
-                         hardware_interface::EffortJointInterface &position_interface);
 };
 
 
-#endif //ARMADILLO2_HW_RICBOARD_PUB_H
+#endif //KOMODO2_HW_RICBOARD_PUB_H

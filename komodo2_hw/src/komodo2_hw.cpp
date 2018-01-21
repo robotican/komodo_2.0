@@ -4,14 +4,12 @@
 namespace komodo2_hw
 {
 
-    ArmadilloHW::ArmadilloHW(ros::NodeHandle &nh) :
+    Komodo2HW::Komodo2HW(ros::NodeHandle &nh) :
             battery_(nh), ric_(nh), roboteq_(nh)
     {
         node_handle_ = &nh;
 
         /* register handles */
-        ric_.registerHandles(joint_state_interface_,
-                             effort_interface_);
         roboteq_.registerHandles(joint_state_interface_,
                                  velocity_interface_);
 
@@ -31,20 +29,17 @@ namespace komodo2_hw
         speakMsg("i am ready", 1);
     }
 
-    void ArmadilloHW::read()
+    void Komodo2HW::read()
     {
         ros::Duration period = ros::Time::now() - prev_time_;
-        dxl_motors_.read();
         roboteq_.read(period);
         ric_.read(period);
     }
 
-    void ArmadilloHW::write()
+    void Komodo2HW::write()
     {
         ros::Duration period = ros::Time::now() - prev_time_;
-        dxl_motors_.write();
         roboteq_.write(period);
-        ric_.write(period);
         prev_time_ = ros::Time::now();
     }
 }
