@@ -5,14 +5,11 @@ namespace komodo2_hw
 {
 
     ArmadilloHW::ArmadilloHW(ros::NodeHandle &nh) :
-            dxl_motors_(nh), battery_(nh), ric_(nh), roboteq_(nh)
+            battery_(nh), ric_(nh), roboteq_(nh)
     {
         node_handle_ = &nh;
 
         /* register handles */
-        dxl_motors_.registerHandles(joint_state_interface_,
-                                    position_interface_,
-                                    posvel_interface_);
         ric_.registerHandles(joint_state_interface_,
                              effort_interface_);
         roboteq_.registerHandles(joint_state_interface_,

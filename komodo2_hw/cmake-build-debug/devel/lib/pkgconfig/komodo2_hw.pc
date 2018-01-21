@@ -1,8 +1,0 @@
-prefix=/home/komodo/catkin_ws/src/komodo2/komodo2_hw/cmake-build-debug/devel
-
-Name: komodo2_hw
-Description: Description of komodo2_hw
-Version: 0.0.0
-Cflags: -I/home/komodo/catkin_ws/src/komodo2/komodo2_hw/include
-Libs: -L/home/komodo/catkin_ws/src/komodo2/komodo2_hw/cmake-build-debug/devel/lib -lkomodo2_hw
-Requires: bms_interface ric_interface roboteq_control
