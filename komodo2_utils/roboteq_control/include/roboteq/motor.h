@@ -199,7 +199,7 @@ private:
     joint_limits_interface::VelocityJointSoftLimitsInterface vel_limits_interface;
 
     // Publisher diagnostic information
-    ros::Publisher pub_status, pub_control;
+    //ros::Publisher pub_status, pub_control;
     // Message
     roboteq_control::MotorStatus msg_status;
     roboteq_control::ControlStatus msg_control;
@@ -214,7 +214,7 @@ private:
     // Reader motor message
     void read(string data);
 
-    void connectionCallback(const ros::SingleSubscriberPublisher& pub);
+    //void connectionCallback(const ros::SingleSubscriberPublisher& pub);
 };
 
 }

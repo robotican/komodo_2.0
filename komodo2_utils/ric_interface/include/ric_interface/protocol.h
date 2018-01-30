@@ -20,6 +20,13 @@ namespace ric_interface
             ERROR = 108
         };
 
+        enum class ErrCode
+        {
+            INIT = 50,
+            READ = 51,
+            CALIB = 52
+        };
+
         const uint16_t MAX_PKG_SIZE = 512;
         const uint8_t HEADER_CODE = 200;
         const uint8_t HEADER_INDX = 0;
@@ -98,31 +105,13 @@ namespace ric_interface
         struct gps : sensor
         {
             gps() { type = (uint8_t)Type::GPS; }
-            float lat = 0,
-                    lon = 0;
-
-            float speed = 0,
-                    angle = 0;
-
-            float elevation = 0;
-
-            /* E, N, S, W */
-            char lat_mark = 0,
-                    lon_mark = 0;
-
-            uint8_t hour = 0,
-                    minute = 0,
-                    seconds = 0,
-                    year = 0,
-                    month = 0,
-                    day = 0;
-
-            uint8_t fix_quality = 0,
-                    satellites = 0;
-
-            bool fix = false;
+            double lat = 0, lon = 0;
+            float alt = 0;
+            float speed = 0;
+            float heading = 0;
+            float satellites = 0;
+            uint8_t date_time = 0; //UTC hundredths of a second
         };
-
 
         struct servo : actuator
         {

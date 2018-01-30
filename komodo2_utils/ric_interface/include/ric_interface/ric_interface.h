@@ -44,6 +44,7 @@ namespace ric_interface
         bool readLoggerMsg(std::string &msg, int32_t &value);
         bool readErrorMsg(protocol::error &error);
         static std::string compType2String(const protocol::Type comp_type);
+        static std::string errCode2String(const protocol::ErrCode err_code);
     };
 }
 

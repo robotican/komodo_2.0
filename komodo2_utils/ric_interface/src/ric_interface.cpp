@@ -72,6 +72,20 @@ namespace ric_interface
         return NULL;
     }
 
+    std::string RicInterface::errCode2String(const protocol::ErrCode err_code)
+    {
+        switch (err_code)
+        {
+            case protocol::ErrCode::INIT:
+                return "initialization failed";
+            case protocol::ErrCode::READ:
+                return "reading failed";
+            case protocol::ErrCode::CALIB:
+                return "can't find calibration data";
+        }
+        return NULL;
+    }
+
     void RicInterface::readAndHandlePkg()
     {
         int pkg_type = comm_.read(pkg_buff_);
@@ -135,9 +149,22 @@ namespace ric_interface
                     if (imu_pkg.type == (uint8_t)protocol::Type::IMU)
                     {
                         sensors_state_.imu = imu_pkg;
-                        /*fprintf(stderr, "imu: roll: %f, pitch: %f, yaw: %f \n", sensors_state_.imu.roll_rad * 180 / M_PI,
+                        /*fprintf(stderr, "imu:\troll: %f,\tpitch: %f,\tyaw: %f \n",
+                                sensors_state_.imu.roll_rad * 180 / M_PI,
                                 sensors_state_.imu.pitch_rad * 180 / M_PI,
-                                sensors_state_.imu.yaw_rad * 180 / M_PI);*/
+                                sensors_state_.imu.yaw_rad * 180 / M_PI);
+                        fprintf(stderr, "imu:\taccl_x: %f,\taccl_y: %f,\taccl_z: %f \n",
+                                sensors_state_.imu.accl_x_rad * 180 / M_PI,
+                                sensors_state_.imu.accl_y_rad * 180 / M_PI,
+                                sensors_state_.imu.accl_z_rad * 180 / M_PI);
+                        fprintf(stderr, "imu:\tgyro_x: %f,\tgyro_y: %f,\tgyro_z: %f \n",
+                                sensors_state_.imu.gyro_x_rad * 180 / M_PI,
+                                sensors_state_.imu.gyro_y_rad * 180 / M_PI,
+                                sensors_state_.imu.gyro_z_rad * 180 / M_PI);
+                        fprintf(stderr, "imu:\tmag_x: %f,\tmag_y: %f,\tmag_z: %f \n",
+                                sensors_state_.imu.mag_x_rad * 180 / M_PI,
+                                sensors_state_.imu.mag_y_rad * 180 / M_PI,
+                                sensors_state_.imu.mag_z_rad * 180 / M_PI);*/
                     }
                     break;
                 }

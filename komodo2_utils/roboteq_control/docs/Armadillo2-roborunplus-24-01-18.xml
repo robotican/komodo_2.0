@@ -584,18 +584,18 @@
               <Node Text="Capture Type" Value="1">
                 <Nodes />
               </Node>
-              <Node Text="Input Use" Value="33">
+              <Node Text="Input Use" Value="17">
                 <Nodes />
               </Node>
               <Node Text="Range" Value="">
                 <Nodes>
-                  <Node Text="Input Min" Value="1064">
+                  <Node Text="Input Min" Value="1116">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Center" Value="1453">
+                  <Node Text="Input Center" Value="1503">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Max" Value="1865">
+                  <Node Text="Input Max" Value="1839">
                     <Nodes />
                   </Node>
                 </Nodes>
@@ -619,18 +619,18 @@
               <Node Text="Capture Type" Value="1">
                 <Nodes />
               </Node>
-              <Node Text="Input Use" Value="17">
+              <Node Text="Input Use" Value="33">
                 <Nodes />
               </Node>
               <Node Text="Range" Value="">
                 <Nodes>
-                  <Node Text="Input Min" Value="1222">
+                  <Node Text="Input Min" Value="1113">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Center" Value="1580">
+                  <Node Text="Input Center" Value="1508">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Max" Value="1978">
+                  <Node Text="Input Max" Value="1865">
                     <Nodes />
                   </Node>
                 </Nodes>
@@ -818,10 +818,10 @@
               <Node Text="Max Speed (RPM)" Value="78">
                 <Nodes />
               </Node>
-              <Node Text="Acceleration (RPM/s)" Value="2000">
+              <Node Text="Acceleration (RPM/s)" Value="1800">
                 <Nodes />
               </Node>
-              <Node Text="Decceleration (RPM/s)" Value="5000">
+              <Node Text="Decceleration (RPM/s)" Value="3200">
                 <Nodes />
               </Node>
             </Nodes>
@@ -840,7 +840,7 @@
               <Node Text="Proportional Gain" Value="50">
                 <Nodes />
               </Node>
-              <Node Text="Integral Gain" Value="80">
+              <Node Text="Integral Gain" Value="45">
                 <Nodes />
               </Node>
               <Node Text="Differential Gain" Value="0">
@@ -899,10 +899,10 @@
               <Node Text="Max Speed (RPM)" Value="78">
                 <Nodes />
               </Node>
-              <Node Text="Acceleration (RPM/s)" Value="2000">
+              <Node Text="Acceleration (RPM/s)" Value="1800">
                 <Nodes />
               </Node>
-              <Node Text="Decceleration (RPM/s)" Value="5000">
+              <Node Text="Decceleration (RPM/s)" Value="3200">
                 <Nodes />
               </Node>
             </Nodes>
@@ -921,7 +921,7 @@
               <Node Text="Proportional Gain" Value="50">
                 <Nodes />
               </Node>
-              <Node Text="Integral Gain" Value="80">
+              <Node Text="Integral Gain" Value="45">
                 <Nodes />
               </Node>
               <Node Text="Differential Gain" Value="0">

@@ -12,7 +12,7 @@ RicboardPub::RicboardPub(ros::NodeHandle &nh)
     {
         if (!ros::param::get(RIC_PORT_PARAM, ric_port_))
         {
-            ROS_ERROR("[armadillo2_hw/ricboard_pub]: %s param is missing on param server. make sure that you load this param exist in ricboard_config.yaml "
+            ROS_ERROR("[komodo2_hw/ricboard_pub]: %s param is missing on param server. make sure that you load this param exist in ricboard_config.yaml "
                               "and that your launch includes this param file. shutting down...", RIC_PORT_PARAM);
             ros::shutdown();
             exit (EXIT_FAILURE);
@@ -20,9 +20,9 @@ RicboardPub::RicboardPub(ros::NodeHandle &nh)
 
         try{
             ric_.connect(ric_port_);
-            ROS_INFO("[armadillo2_hw/ricboard_pub]: ricboard port opened successfully \nport name: %s \nbaudrate: 115200", ric_port_.c_str());
+            ROS_INFO("[komodo2_hw/ricboard_pub]: ricboard port opened successfully \nport name: %s \nbaudrate: 115200", ric_port_.c_str());
         }catch (ric_interface::ConnectionExeption e) {
-            ROS_ERROR("[armadillo2_hw/ricboard_pub]: can't open ricboard port. make sure that ricboard is connected. shutting down...");
+            ROS_ERROR("[komodo2_hw/ricboard_pub]: can't open ricboard port. make sure that ricboard is connected. shutting down...");
             ros::shutdown();
             exit(1);
         }
@@ -34,12 +34,12 @@ RicboardPub::RicboardPub(ros::NodeHandle &nh)
 
         ric_pub_timer_ = nh.createTimer(ros::Duration(RIC_PUB_INTERVAL), &RicboardPub::pubTimerCB, this);
         ric_dead_timer_ = nh.createTimer(ros::Duration(RIC_DEAD_TIMEOUT), &RicboardPub::ricDeadTimerCB, this);
-        ROS_INFO("[armadillo2_hw/ricboard_pub]: ricboard is up");
+        ROS_INFO("[komodo2_hw/ricboard_pub]: ricboard is up");
         espeak_pub_ = nh.advertise<std_msgs::String>("/espeak_node/speak_line", 10);
         /*speakMsg("rik board is up", 1); */
     }
     else
-        ROS_WARN("[armadillo2_hw/ricboard_pub]: ric hardware is disabled");
+        ROS_WARN("[komodo2_hw/ricboard_pub]: ric hardware is disabled");
 }
 
 void RicboardPub::startLoop()
@@ -76,16 +76,25 @@ void RicboardPub::loop()
             if (ric_.getSensorsState().emrgcy_alarm.is_on)
             {
                 speakMsg("emergency, shutting down", 1);
-                ROS_ERROR("[armadillo2_hw/ricboard_pub]: EMERGENCY PIN DISCONNECTED, shutting down...");
+                ROS_ERROR("[komodo2_hw/ricboard_pub]: EMERGENCY PIN DISCONNECTED, shutting down...");
                 ros::shutdown();
                 exit(EXIT_FAILURE);
             }
             if (ric_.readLoggerMsg(logger_msg, logger_val))
-                ROS_INFO("[armadillo2_hw/ricboard_pub]: ric logger is saying: '%s', value: %i", logger_msg.c_str(), logger_val);
+                ROS_INFO("[komodo2_hw/ricboard_pub]: ric logger is saying: '%s', value: %i", logger_msg.c_str(), logger_val);
             if (ric_.readErrorMsg(err_msg))
             {
                 std::string comp_name = ric_interface::RicInterface::compType2String((ric_interface::protocol::Type)err_msg.comp_type);
-                ROS_WARN("[armadillo2_hw/ricboard_pub]: ric detected error in %s", comp_name.c_str());
+                std::string err_desc = ric_interface::RicInterface::errCode2String((ric_interface::protocol::ErrCode)err_msg.code);
+                if (err_msg.code != (uint8_t)ric_interface::protocol::ErrCode::CALIB)
+                {
+                    ROS_ERROR("[komodo2_hw/ricboard_pub]: ric detected critical '%s' error in %s. shutting down...",
+                              err_desc.c_str(), comp_name.c_str());
+                    ros::shutdown();
+                    exit(EXIT_FAILURE);
+                }
+                ROS_WARN("[komodo2_hw/ricboard_pub]: ric detected '%s' warning in %s",
+                         err_desc.c_str(), comp_name.c_str());
             }
         }
         else
@@ -104,7 +113,7 @@ void RicboardPub::ricDeadTimerCB(const ros::TimerEvent &event)
     if (ric_disconnections_counter_ >= MAX_RIC_DISCONNECTIONS)
     {
         speakMsg("rik board disconnected, shutting down", 1);
-        ROS_ERROR("[armadillo2_hw/ricboard_pub]: ricboard disconnected. shutting down...");
+        ROS_ERROR("[komodo2_hw/ricboard_pub]: ricboard disconnected. shutting down...");
         ros::shutdown();
         exit(EXIT_FAILURE);
     }
@@ -130,7 +139,8 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
 
     /* publish imu */
     sensor_msgs::Imu imu_msg;
-
+    imu_msg.header.stamp = ros::Time::now();
+    imu_msg.header.frame_id = "base_link";
     tf::Quaternion orientation_q = tf::createQuaternionFromRPY(sensors.imu.roll_rad,
                                                                sensors.imu.pitch_rad,
                                                                sensors.imu.yaw_rad);
@@ -152,6 +162,8 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     {
         sensor_msgs::NavSatFix gps_msg;
         sensor_msgs::NavSatStatus gps_status;
+        gps_msg.header.stamp = ros::Time::now();
+        gps_msg.header.frame_id = "base_link";
         gps_status.status = sensor_msgs::NavSatStatus::STATUS_SBAS_FIX;
         gps_status.status = sensor_msgs::NavSatStatus::SERVICE_GPS;
 
@@ -168,9 +180,6 @@ void RicboardPub::read(const ros::Duration elapsed)
 {
     if (!load_ric_hw_ || !ric_.isBoardAlive())
         return;
-
-    /* update robot state according to ric sensor for controller use */
-    ric_interface::sensors_state sensors = ric_.getSensorsState();
 }
 
 
