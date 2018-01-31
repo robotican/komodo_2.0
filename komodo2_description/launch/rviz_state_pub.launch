@@ -3,7 +3,7 @@
 <launch>
     
     
-    <param name="robot_description" command="$(find xacro)/xacro.py '$(find armadillo2_description)/urdf/komodo2.xacro'" />
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find komodo2_description)/urdf/komodo2.xacro'" />
     
     
     <param name="publish_default_velocities" value="false" />

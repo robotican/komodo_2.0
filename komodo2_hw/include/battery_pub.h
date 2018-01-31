@@ -6,7 +6,6 @@
 #include <sensor_msgs/BatteryState.h>
 #include <std_msgs/String.h>
 
-//#define BATT_PORT "/dev/BMS"
 #define BATT_PUB_INTERVAL 2 //secs
 #define SPEAK_LOW_BAT_INTERVAL 30 //secs
 #define BATT_PORT_PARAM "~batt_port"

@@ -33,7 +33,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/base_link.STL" />
+          filename="package://komodo2_description/mesh/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -47,7 +47,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/base_link.STL" />
+          filename="package://komodo2_description/mesh/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -74,7 +74,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/wheel_link.STL" />
+          filename="package://komodo2_description/mesh/wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -87,7 +87,7 @@
         xyz="0 0 0"
         rpy="${M_PI/2} 0 0" />
       <geometry>
-	<!--  <mesh filename="package://robotican_komodo/description/meshes/wheel_link.STL" /> -->
+	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
 	  <cylinder  length="0.05" radius="0.127"/> 
       </geometry>
     </collision>
@@ -127,7 +127,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/wheel_link.STL" />
+          filename="package://komodo2_description/mesh/wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -140,7 +140,7 @@
         xyz="0 0 0"
         rpy="${M_PI/2} 0 0" />
       <geometry>
-	<!--  <mesh filename="package://robotican_komodo/description/meshes/wheel_link.STL" /> -->
+	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
 	  <cylinder  length="0.05" radius="0.127"/> 
       </geometry>
     </collision>
@@ -180,7 +180,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/wheel_link.STL" />
+          filename="package://komodo2_description/mesh/wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -193,7 +193,7 @@
         xyz="0 0 0"
         rpy="${M_PI/2} 0 0" />
       <geometry>
-	<!--  <mesh filename="package://robotican_komodo/description/meshes/wheel_link.STL" /> -->
+	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
 	  <cylinder  length="0.05" radius="0.127"/> 
       </geometry>
     </collision>
@@ -233,7 +233,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/wheel_link.STL" />
+          filename="package://komodo2_description/mesh/wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -246,7 +246,7 @@
         xyz="0 0 0"
         rpy="${M_PI/2} 0 0" />
       <geometry>
-	<!--  <mesh filename="package://robotican_komodo/description/meshes/wheel_link.STL" /> -->
+	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
 	  <cylinder  length="0.05" radius="0.127"/> 
       </geometry>
     </collision>
@@ -277,7 +277,7 @@
       </material>
       <geometry>
         <mesh
-          filename="package://robotican_komodo/description/meshes/laser_link.STL" />
+          filename="package://komodo2_description/mesh/laser_link.STL" />
       </geometry>
       <material
         name="">

@@ -1,7 +1,3 @@
-//
-// Created by armadillo2 on 04/12/17.
-//
-
 #ifndef KOMODO2_HW_ROBOTEQ_DIFF_DRIVE_H
 #define KOMODO2_HW_ROBOTEQ_DIFF_DRIVE_H
 
