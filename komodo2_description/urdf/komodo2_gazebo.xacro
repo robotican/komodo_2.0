@@ -1,32 +1,16 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Komodo" description="Komodo robot">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Komodo2" description="Komodo2 robot">
+    
   <xacro:include filename="$(find robotican_komodo)/description/models/komodo.xacro" />
-  <xacro:include filename="$(find robotican_common)/gazebo/softkinetic_camera_ds325.xacro" />
-
 
   <xacro:property name="URF_FOV" value="${10.0*M_PI/180}" />
 
   <xacro:arg name="controllers" default="true"/>
-  <xacro:arg name="front_camera" default="false"/>
+  <xacro:arg name="rgb_camera" default="false"/>
   <xacro:arg name="urf" default="false"/>
   <xacro:arg name="imu" default="false"/>
   <xacro:arg name="gps" default="false"/>
   <xacro:arg name="lidar" default="false"/>
-  <xacro:arg name="sr300" default="false"/>
-    <xacro:arg name="softkinetic" default="false"/>
-  <xacro:arg name="depth_camera" default="false"/>
-  
-    <!-- softkinetic -->
-  <xacro:if value="$(arg softkinetic)">
-     <xacro:softkinetic_gazebo name="softkinetic_camera_rgb" ros_topic="softkinetic_camera"/> 
-  </xacro:if>
-
-  <!-- TODO: Asus -->
-
-  <xacro:if value="$(arg depth_camera)">
-    <xacro:include filename="$(find robotican_common)/gazebo/asus_xtion_pro_live.xacro" />
-  </xacro:if>
-
 
   <!-- Sonars -->
   <xacro:if value="$(arg urf)">
@@ -61,10 +45,10 @@
 
     <!-- cameras  -->
     <xacro:include filename="$(find robotican_common)/gazebo/camera.xacro" />
-    <xacro:if value="$(arg front_camera)">
-      <xacro:Camera name="front_camera" link="front_cam_link" image_width="640" image_height="480"
+    <xacro:if value="$(arg rgb_camera)">
+    <xacro:Camera name="rgb_camera" link="rgb_camera_link" image_width="640" image_height="480"
         image_format="R8G8B8" clip_near="0.02" clip_far="300" />
-      </xacro:if>
+    </xacro:if>
 
 
       <!-- controller manager and hardware interfaces -->
@@ -77,42 +61,42 @@
         </gazebo>
 
         <!-- joints -->
-        <transmission name="FL_wheel_joint_trans">
+        <transmission name="front_left_wheel_joint_trans">
           <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FL_wheel_joint">
+          <joint name="front_left_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
           </joint>
-          <actuator name="FL_wheel_joint_motor">
+          <actuator name="front_left_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
           </actuator>
         </transmission>
 
-        <transmission name="FR_wheel_joint_trans">
+        <transmission name="front_right_wheel_joint_trans">
           <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FR_wheel_joint">
+          <joint name="front_right_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
           </joint>
-          <actuator name="FR_wheel_joint_motor">
+          <actuator name="front_right_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
           </actuator>
         </transmission>
 
-        <transmission name="RL_wheel_joint_trans">
+        <transmission name="rear_left_wheel_joint_trans">
           <type>transmission_interface/SimpleTransmission</type>
-          <joint name="RL_wheel_joint">
+          <joint name="rear_left_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
           </joint>
-          <actuator name="RL_wheel_joint_motor">
+          <actuator name="rear_left_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
           </actuator>
         </transmission>
 
-        <transmission name="RR_wheel_joint_trans">
+        <transmission name="rear_right_wheel_joint_trans">
           <type>transmission_interface/SimpleTransmission</type>
-          <joint name="RR_wheel_joint">
+          <joint name="rear_right_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
           </joint>
-          <actuator name="RR_wheel_joint_motor">
+          <actuator name="rear_right_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
           </actuator>
         </transmission>
@@ -121,7 +105,7 @@
 
       </xacro:if>
 
-      <gazebo reference="FL_wheel_link">
+      <gazebo reference="front_left_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -133,7 +117,7 @@
         <material>Gazebo/Black</material>
       </gazebo>
 
-      <gazebo reference="FR_wheel_link">
+      <gazebo reference="front_right_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -145,7 +129,7 @@
         <material>Gazebo/Black</material>
       </gazebo>
 
-      <gazebo reference="RL_wheel_link">
+      <gazebo reference="rear_left_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -157,7 +141,7 @@
         <material>Gazebo/Black</material>
       </gazebo>
 
-      <gazebo reference="RR_wheel_link">
+      <gazebo reference="rear_right_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -172,22 +156,14 @@
       <gazebo reference="base_link">
         <material>Gazebo/Grey</material>
       </gazebo>
-      <gazebo reference="FR_urf_link">
+      <gazebo reference="right_urf_link">
         <material>Gazebo/Black</material>
       </gazebo>
-      <gazebo reference="FL_urf_link">
+      <gazebo reference="left_urf_link">
         <material>Gazebo/Black</material>
       </gazebo>
-      <gazebo reference="RR_urf_link">
+      <gazebo reference="front_urf_link">
         <material>Gazebo/Black</material>
       </gazebo>
-      <gazebo reference="RL_urf_link">
-        <material>Gazebo/Black</material>
-      </gazebo>
-      <gazebo reference="rear_urf_link">
-        <material>Gazebo/Black</material>
-      </gazebo>
-      <gazebo reference="sr300_link">
-        <material>Gazebo/Black</material>
-      </gazebo>
+
 </robot>

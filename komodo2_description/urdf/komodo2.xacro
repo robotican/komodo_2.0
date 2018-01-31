@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-	<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="komodo_robot" description="Komodo Robot">
+	<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="komodo2_robot" description="Komodo2 Robot">
 	<xacro:property name="M_PI" value="3.1415926535897931" />
     
   
@@ -298,9 +298,9 @@
       xyz="0 0 0" />
   </joint>
   <link
-    name="front_cam_link" />
+    name="rgb_camera_link" />
   <joint
-    name="front_cam_joint"
+    name="rgb_camera_joint"
     type="fixed">
     <origin
       xyz="0.25425 0.0875 0.1"
@@ -308,14 +308,14 @@
     <parent
       link="base_link" />
     <child
-      link="front_cam_link" />
+      link="rgb_camera_link" />
     <axis
       xyz="0 0 0" />
   </joint>
   <link
     name="depth_camera_link" />
   <joint
-    name="depth_cam_joint"
+    name="depth_camera_joint"
     type="fixed">
     <origin
       xyz="0.25525 0.0006082 0.063584"
