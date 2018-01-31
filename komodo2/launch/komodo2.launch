@@ -11,8 +11,9 @@
     <arg name="y" default="0.0"/>
     <arg name="z" default="0.0"/>
     <arg name="Y" default="0.0" />
-    <arg name="softkinetic" default="false"/>
     <arg name="lidar" default="false"/>
+    <arg name="rgb_camera" default="false"/>
+    <arg name="depth_camera" default="false"/>
     <arg name="gmapping" default="false"/>
     <arg name="hector_slam" default="false"/>
     <arg name="amcl" default="false"/>

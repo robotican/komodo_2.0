@@ -1,111 +1,104 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Komodo2" description="Komodo2 robot">
     
-  <xacro:include filename="$(find robotican_komodo)/description/models/komodo.xacro" />
-
-  <xacro:property name="URF_FOV" value="${10.0*M_PI/180}" />
-
-  <xacro:arg name="controllers" default="true"/>
-  <xacro:arg name="rgb_camera" default="false"/>
-  <xacro:arg name="urf" default="false"/>
-  <xacro:arg name="imu" default="false"/>
-  <xacro:arg name="gps" default="false"/>
-  <xacro:arg name="lidar" default="false"/>
-
-  <!-- Sonars -->
-  <xacro:if value="$(arg urf)">
+    <xacro:include filename="$(find robotican_komodo)/description/models/komodo.xacro" />
+    
+    <xacro:property name="URF_FOV" value="${10.0*M_PI/180}" />
+    
+    <xacro:arg name="rgb_camera" default="false"/>
+    <xacro:arg name="depth_camera" default="false"/>
+    <xacro:arg name="lidar" default="false"/>
+    
+    <!-- sonars -->
     <xacro:include filename="$(find komodo2_gazebo)/macros/urf.xacro" />
     <xacro:urf name="left" link="left_urf_link" topic="URF/left" />
     <xacro:urf name="right" link="right_urf_link" topic="URF/right" />
     <xacro:urf name="rear" link="rear_urf_link" topic="URF/rear" />
-  </xacro:if>
-
-
-  <!-- hokuyo URG-30LX   -->
-  <xacro:if value="$(arg lidar)">
-    <xacro:include filename="$(find komodo2_gazebo)/macros/hokuyo.xacro" />
-    <xacro:lidar link="laser_link" topic="scan" samples="720" resolution="1" min_angle="-1.5707" max_angle="1.5707" range_min="0.1" range_max="30.0" range_resolution="0.01" />
-  </xacro:if>
-
-
-  <!-- GPS   -->
-  <xacro:if value="$(arg gps)">
+    
+    <!-- hokuyo -->
+    <xacro:if value="$(arg lidar)">
+        <xacro:include filename="$(find komodo2_gazebo)/macros/hokuyo.xacro" />
+        <xacro:lidar link="laser_link" topic="scan" samples="720" resolution="1" min_angle="-1.5707" max_angle="1.5707" range_min="0.1" range_max="30.0" range_resolution="0.01" />
+    </xacro:if>
+    
+    <!-- rgb camera  -->
+    <xacro:if value="$(arg rgb_camera)">
+        <xacro:include filename="$(find komodo2_gazebo)/macros/camera.xacro" />
+        <xacro:Camera name="rgb_camera" link="rgb_camera_link" image_width="640" image_height="480" image_format="R8G8B8" clip_near="0.02" clip_far="300" /> 
+    </xacro:if>
+    
+    <!-- depth camera  -->
+    <xacro:if value="$(arg depth_camera)">
+        <xacro:include filename="$(find komodo2_gazebo)/macros/softkinetic_camera_ds325.xacro" />
+        <xacro:Camera name="depth_camera" link="depth_camera_link" image_width="640" image_height="480" image_format="R8G8B8" clip_near="0.02" clip_far="300" /> 
+    </xacro:if>
+    
+    
+    <!-- GPS   -->
     <xacro:include filename="$(find komodo2_gazebo)/macros/gps.xacro" />
     <xacro:gps />
-  </xacro:if>
-
-  <!-- IMU   -->
-  <xacro:if value="$(arg imu)">
+    
+    <!-- IMU   -->
     <xacro:include filename="$(find komodo2_gazebo)/macros/imu.xacro" />
     <xacro:imu link="base_link" imu_offset_x="0" imu_offset_y="0" imu_offset_z="${M_PI}"
-      imu_offset_roll="0" imu_offset_pitch="0"
-      imu_offset_yaw="0" mag_offset_x="0"
-      mag_offset_y="0" mag_offset_z="0" />
-    </xacro:if>
-
-    <!-- cameras  -->
-    <xacro:include filename="$(find komodo2_gazebo)/macros/camera.xacro" />
-    <xacro:if value="$(arg rgb_camera)">
-    <xacro:Camera name="rgb_camera" link="rgb_camera_link" image_width="640" image_height="480"
-        image_format="R8G8B8" clip_near="0.02" clip_far="300" />
-    </xacro:if>
-
-
-      <!-- controller manager and hardware interfaces -->
-      <xacro:if value="$(arg controllers)">
-
-        <gazebo>
-          <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotSimType>gazebo_ros_control/RoboticanRobotHWSim</robotSimType>
-          </plugin>
-        </gazebo>
-
-        <!-- joints -->
-        <transmission name="front_left_wheel_joint_trans">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="front_left_wheel_joint">
+               imu_offset_roll="0" imu_offset_pitch="0"
+               imu_offset_yaw="0" mag_offset_x="0"
+               mag_offset_y="0" mag_offset_z="0" />
+    
+    
+    
+    <!-- controller manager and hardware interfaces -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotSimType>gazebo_ros_control/Komodo2HWSim</robotSimType>
+        </plugin>
+    </gazebo>
+    
+    <!-- transmissions -->
+    <transmission name="front_left_wheel_joint_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="front_left_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="front_left_wheel_joint_motor">
+        </joint>
+        <actuator name="front_left_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
-          </actuator>
-        </transmission>
-
-        <transmission name="front_right_wheel_joint_trans">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="front_right_wheel_joint">
+        </actuator>
+    </transmission>
+    
+    <transmission name="front_right_wheel_joint_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="front_right_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="front_right_wheel_joint_motor">
+        </joint>
+        <actuator name="front_right_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
-          </actuator>
-        </transmission>
-
-        <transmission name="rear_left_wheel_joint_trans">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="rear_left_wheel_joint">
+        </actuator>
+    </transmission>
+    
+    <transmission name="rear_left_wheel_joint_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="rear_left_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="rear_left_wheel_joint_motor">
+        </joint>
+        <actuator name="rear_left_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
-          </actuator>
-        </transmission>
-
-        <transmission name="rear_right_wheel_joint_trans">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="rear_right_wheel_joint">
+        </actuator>
+    </transmission>
+    
+    <transmission name="rear_right_wheel_joint_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="rear_right_wheel_joint">
             <hardwareInterface>VelocityJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="rear_right_wheel_joint_motor">
+        </joint>
+        <actuator name="rear_right_wheel_joint_motor">
             <mechanicalReduction>1</mechanicalReduction>
-          </actuator>
-        </transmission>
-
-
-
-      </xacro:if>
-
-      <gazebo reference="front_left_wheel_link">
+        </actuator>
+    </transmission>
+    
+    
+    
+    <!-- physics -->
+    <gazebo reference="front_left_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -115,9 +108,9 @@
         <maxVel>1.0</maxVel>
         <minDepth>0.00</minDepth>
         <material>Gazebo/Black</material>
-      </gazebo>
-
-      <gazebo reference="front_right_wheel_link">
+    </gazebo>
+    
+    <gazebo reference="front_right_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -127,9 +120,9 @@
         <maxVel>1.0</maxVel>
         <minDepth>0.00</minDepth>
         <material>Gazebo/Black</material>
-      </gazebo>
-
-      <gazebo reference="rear_left_wheel_link">
+    </gazebo>
+    
+    <gazebo reference="rear_left_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -139,9 +132,9 @@
         <maxVel>1.0</maxVel>
         <minDepth>0.00</minDepth>
         <material>Gazebo/Black</material>
-      </gazebo>
-
-      <gazebo reference="rear_right_wheel_link">
+    </gazebo>
+    
+    <gazebo reference="rear_right_wheel_link">
         <!-- kp and kd for rubber -->
         <kp>1000000.0</kp>
         <kd>100.0</kd>
@@ -151,19 +144,20 @@
         <maxVel>1.0</maxVel>
         <minDepth>0.00</minDepth>
         <material>Gazebo/Black</material>
-      </gazebo>
-
-      <gazebo reference="base_link">
+    </gazebo>
+    
+    <!-- colors -->
+    <gazebo reference="base_link">
         <material>Gazebo/Grey</material>
-      </gazebo>
-      <gazebo reference="right_urf_link">
+    </gazebo>
+    <gazebo reference="right_urf_link">
         <material>Gazebo/Black</material>
-      </gazebo>
-      <gazebo reference="left_urf_link">
+    </gazebo>
+    <gazebo reference="left_urf_link">
         <material>Gazebo/Black</material>
-      </gazebo>
-      <gazebo reference="front_urf_link">
+    </gazebo>
+    <gazebo reference="front_urf_link">
         <material>Gazebo/Black</material>
-      </gazebo>
-
+    </gazebo>
+    
 </robot>

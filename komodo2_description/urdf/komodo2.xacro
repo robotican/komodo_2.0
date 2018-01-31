@@ -298,7 +298,7 @@
       xyz="0 0 0" />
   </joint>
   <link
-    name="rgb_camera_link" />
+    name="front_camera_link" />
   <joint
     name="rgb_camera_joint"
     type="fixed">
@@ -308,7 +308,7 @@
     <parent
       link="base_link" />
     <child
-      link="rgb_camera_link" />
+      link="camera_link" />
     <axis
       xyz="0 0 0" />
   </joint>
