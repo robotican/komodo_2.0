@@ -53,7 +53,7 @@
   </link>
 
   <link
-    name="RL_wheel_link">
+    name="rear_left_wheel_link">
     <inertial>
       <origin
         xyz="9.8684E-07 -9.3003E-05 -1.8753E-05"
@@ -93,7 +93,7 @@
     </collision>
   </link>
   <joint
-    name="RL_wheel_joint"
+    name="rear_left_wheel_joint"
     type="continuous">
     <origin
       xyz="-0.165 0.18955 0"
@@ -101,12 +101,12 @@
     <parent
       link="base_link" />
     <child
-      link="RL_wheel_link" />
+      link="rear_left_wheel_link" />
     <axis
       xyz="0 1 0" />
   </joint>
   <link
-    name="FL_wheel_link">
+    name="front_left_wheel_link">
     <inertial>
       <origin
         xyz="9.8687E-07 -9.3003E-05 -1.8753E-05"
@@ -146,7 +146,7 @@
     </collision>
   </link>
   <joint
-    name="FL_wheel_joint"
+    name="front_left_wheel_joint"
     type="continuous">
     <origin
       xyz="0.165 0.18955 0"
@@ -154,12 +154,12 @@
     <parent
       link="base_link" />
     <child
-      link="FL_wheel_link" />
+      link="front_left_wheel_link" />
     <axis
       xyz="0 1 0" />
   </joint>
   <link
-    name="RR_wheel_link">
+    name="rear_right_wheel_link">
     <inertial>
       <origin
         xyz="-9.8675E-07 9.3004E-05 -1.8753E-05"
@@ -199,7 +199,7 @@
     </collision>
   </link>
   <joint
-    name="RR_wheel_joint"
+    name="rear_right_wheel_joint"
     type="continuous">
     <origin
       xyz="-0.165 -0.18955 0"
@@ -207,12 +207,12 @@
     <parent
       link="base_link" />
     <child
-      link="RR_wheel_link" />
+      link="rear_right_wheel_link" />
     <axis
       xyz="0 1 0" />
   </joint>
   <link
-    name="FR_wheel_link">
+    name="front_right_wheel_link">
     <inertial>
       <origin
         xyz="-9.867E-07 9.3004E-05 -1.8753E-05"
@@ -252,7 +252,7 @@
     </collision>
   </link>
   <joint
-    name="FR_wheel_joint"
+    name="front_right_wheel_joint"
     type="continuous">
     <origin
       xyz="0.165 -0.18955 0"
@@ -260,7 +260,7 @@
     <parent
       link="base_link" />
     <child
-      link="FR_wheel_link" />
+      link="front_right_wheel_link" />
     <axis
       xyz="0 1 0" />
   </joint>
