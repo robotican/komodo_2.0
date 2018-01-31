@@ -14,7 +14,7 @@
 
   <!-- Sonars -->
   <xacro:if value="$(arg urf)">
-    <xacro:include filename="$(find robotican_common)/gazebo/urf.xacro" />
+    <xacro:include filename="$(find komodo2_gazebo)/macros/urf.xacro" />
     <xacro:urf name="left" link="left_urf_link" topic="URF/left" />
     <xacro:urf name="right" link="right_urf_link" topic="URF/right" />
     <xacro:urf name="rear" link="rear_urf_link" topic="URF/rear" />
@@ -23,20 +23,20 @@
 
   <!-- hokuyo URG-30LX   -->
   <xacro:if value="$(arg lidar)">
-    <xacro:include filename="$(find robotican_common)/gazebo/hokuyo.xacro" />
+    <xacro:include filename="$(find komodo2_gazebo)/macros/hokuyo.xacro" />
     <xacro:lidar link="laser_link" topic="scan" samples="720" resolution="1" min_angle="-1.5707" max_angle="1.5707" range_min="0.1" range_max="30.0" range_resolution="0.01" />
   </xacro:if>
 
 
   <!-- GPS   -->
   <xacro:if value="$(arg gps)">
-    <xacro:include filename="$(find robotican_common)/gazebo/gps.xacro" />
+    <xacro:include filename="$(find komodo2_gazebo)/macros/gps.xacro" />
     <xacro:gps />
   </xacro:if>
 
   <!-- IMU   -->
   <xacro:if value="$(arg imu)">
-    <xacro:include filename="$(find robotican_common)/gazebo/imu.xacro" />
+    <xacro:include filename="$(find komodo2_gazebo)/macros/imu.xacro" />
     <xacro:imu link="base_link" imu_offset_x="0" imu_offset_y="0" imu_offset_z="${M_PI}"
       imu_offset_roll="0" imu_offset_pitch="0"
       imu_offset_yaw="0" mag_offset_x="0"
@@ -44,7 +44,7 @@
     </xacro:if>
 
     <!-- cameras  -->
-    <xacro:include filename="$(find robotican_common)/gazebo/camera.xacro" />
+    <xacro:include filename="$(find komodo2_gazebo)/macros/camera.xacro" />
     <xacro:if value="$(arg rgb_camera)">
     <xacro:Camera name="rgb_camera" link="rgb_camera_link" image_width="640" image_height="480"
         image_format="R8G8B8" clip_near="0.02" clip_far="300" />
