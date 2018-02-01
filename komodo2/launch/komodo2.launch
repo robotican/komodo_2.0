@@ -27,8 +27,8 @@
     
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
     
-    <node name="komodo2_services_node" pkg="komodo2_services" type="komodo2_services_node" respawn="false" output="screen"/>
-    
+    <include file="$(find komodo2_control)/launch/komodo2_controllers.launch" />
+        
     <include file="$(find espeak_ros)/launch/espeak_ros.launch" />
     
     <group if="$(arg have_map)">
@@ -60,8 +60,6 @@
                 lidar:=true
                 softkinetic:=true" />
         
-        <include file="$(find komodo2_control)/launch/komodo2_gazebo_controllers.launch" />
-
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">	    
               <arg name="world_name" value="$(arg world_name)"/>
 	      <arg name="gui" value="true"/>	     
@@ -74,9 +72,7 @@
     <group unless="$(arg gazebo)">
         <param name="robot_description" command="$(find xacro)/xacro '$(find komodo2_description)/urdf/komodo2.xacro' --inorder" />
         <include file="$(find komodo2_hw)/launch/komodo2_hw.launch" />
-        
-        <include file="$(find komodo2_control)/launch/komodo2_hw_controllers.launch" />
-        
+                
         <group if="$(arg softkinetic)">
             <include file="$(find softkinetic_camera)/launch/softkinetic_camera_ds325.launch" />
         </group>
