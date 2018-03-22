@@ -10,7 +10,7 @@
 //#include <stdexcept>
 //#include <sstream>
 
-namespace ric_interface
+namespace ric
 {
     struct RicException : public std::runtime_error
     {

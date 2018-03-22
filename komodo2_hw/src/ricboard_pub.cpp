@@ -21,7 +21,7 @@ RicboardPub::RicboardPub(ros::NodeHandle &nh)
         try{
             ric_.connect(ric_port_);
             ROS_INFO("[komodo2_hw/ricboard_pub]: ricboard port opened successfully \nport name: %s \nbaudrate: 115200", ric_port_.c_str());
-        }catch (ric_interface::ConnectionExeption e) {
+        }catch (ric::ConnectionExeption e) {
             ROS_ERROR("[komodo2_hw/ricboard_pub]: can't open ricboard port. make sure that ricboard is connected. shutting down...");
             ros::shutdown();
             exit(1);
@@ -29,7 +29,9 @@ RicboardPub::RicboardPub(ros::NodeHandle &nh)
 
         /* ric publishers */
         ric_gps_pub_ = nh.advertise<sensor_msgs::NavSatFix>("GPS/fix", 10);
-        ric_ultrasonic_pub_ = nh.advertise<sensor_msgs::Range>("URF/front", 10);
+        rear_urf_pub_ = nh.advertise<sensor_msgs::Range>("URF/rear", 10);
+        right_urf_pub_ = nh.advertise<sensor_msgs::Range>("URF/right", 10);
+        left_urf_pub_ = nh.advertise<sensor_msgs::Range>("URF/left", 10);
         ric_imu_pub_ = nh.advertise<sensor_msgs::Imu>("IMU", 10);
 
         ric_pub_timer_ = nh.createTimer(ros::Duration(RIC_PUB_INTERVAL), &RicboardPub::pubTimerCB, this);
@@ -65,7 +67,7 @@ void RicboardPub::loop()
         ric_.loop();
         if (ric_.isBoardAlive())
         {
-            ric_interface::protocol::error err_msg;
+            ric::protocol::error err_msg;
             std::string logger_msg;
             int32_t logger_val;
             ric_disconnections_counter_ = 0;
@@ -84,9 +86,9 @@ void RicboardPub::loop()
                 ROS_INFO("[komodo2_hw/ricboard_pub]: ric logger is saying: '%s', value: %i", logger_msg.c_str(), logger_val);
             if (ric_.readErrorMsg(err_msg))
             {
-                std::string comp_name = ric_interface::RicInterface::compType2String((ric_interface::protocol::Type)err_msg.comp_type);
-                std::string err_desc = ric_interface::RicInterface::errCode2String((ric_interface::protocol::ErrCode)err_msg.code);
-                if (err_msg.code != (uint8_t)ric_interface::protocol::ErrCode::CALIB)
+                std::string comp_name = ric::RicInterface::compType2String((ric::protocol::Type)err_msg.comp_type);
+                std::string err_desc = ric::RicInterface::errCode2String((ric::protocol::ErrCode)err_msg.code);
+                if (err_msg.code != (uint8_t)ric::protocol::ErrCode::CALIB)
                 {
                     ROS_ERROR("[komodo2_hw/ricboard_pub]: ric detected critical '%s' error in %s. shutting down...",
                               err_desc.c_str(), comp_name.c_str());
@@ -124,18 +126,39 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     if (!load_ric_hw_ || !ric_.isBoardAlive())
         return;
 
-    ric_interface::sensors_state sensors = ric_.getSensorsState();
+    ric::sensors_state sensors = ric_.getSensorsState();
 
     /* publish ultrasonic */
-    sensor_msgs::Range range_msg;
-    range_msg.header.stamp = ros::Time::now();
-    range_msg.header.frame_id = "front_urf_link";
-    range_msg.min_range = 0.3;
-    range_msg.max_range = 3.0;
-    range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
-    range_msg.range = sensors.ultrasonic.distance_mm / 1000.0;
-    range_msg.field_of_view = 0.7f;
-    ric_ultrasonic_pub_.publish(range_msg);
+    /* publish ultrasonic */
+    sensor_msgs::Range rear_range_msg;
+    rear_range_msg.header.stamp = ros::Time::now();
+    rear_range_msg.header.frame_id = "rear_urf_link";
+    rear_range_msg.min_range = 0.3;
+    rear_range_msg.max_range = 3.0;
+    rear_range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
+    rear_range_msg.range = sensors.urf_rear.distance_mm / 1000.0;
+    rear_range_msg.field_of_view = 0.7f;
+    rear_urf_pub_.publish(rear_range_msg);
+
+    sensor_msgs::Range right_urf_msg;
+    right_urf_msg.header.stamp = ros::Time::now();
+    right_urf_msg.header.frame_id = "right_urf_link";
+    right_urf_msg.min_range = 0.3;
+    right_urf_msg.max_range = 3.0;
+    right_urf_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
+    right_urf_msg.range = sensors.urf_right.distance_mm / 1000.0;
+    right_urf_msg.field_of_view = 0.7f;
+    right_urf_pub_.publish(right_urf_msg);
+
+    sensor_msgs::Range left_urf_msg;
+    left_urf_msg.header.stamp = ros::Time::now();
+    left_urf_msg.header.frame_id = "left_urf_link";
+    left_urf_msg.min_range = 0.3;
+    left_urf_msg.max_range = 3.0;
+    left_urf_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
+    left_urf_msg.range = sensors.urf_left.distance_mm / 1000.0;
+    left_urf_msg.field_of_view = 0.7f;
+    left_urf_pub_.publish(left_urf_msg);
 
     /* publish imu */
     sensor_msgs::Imu imu_msg;
@@ -176,10 +199,25 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     }
 }
 
-void RicboardPub::read(const ros::Duration elapsed)
-{
-    if (!load_ric_hw_ || !ric_.isBoardAlive())
-        return;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

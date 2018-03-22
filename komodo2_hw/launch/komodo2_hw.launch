@@ -15,11 +15,11 @@
         <param name="right_rear_wheel_joint" value="right_rear_wheel_joint" />
         <param name="roboteq_port" value="/dev/komodo2/ROBOTEQ" />
         <param name="roboteq_baud" value="115200" />
-        
+
         <!--ricboard-->
         <param name="load_ric_hw" value="true" />
         <param name="ric_port" value="/dev/komodo2/RICBOARD" />
-        
+
         <!--battery management system-->
         <param name="load_battery_hw" value="true" />
         <param name="show_warnings" value="false" />

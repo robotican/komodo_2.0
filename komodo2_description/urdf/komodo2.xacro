@@ -1,31 +1,22 @@
 <?xml version="1.0"?>
-	<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="komodo2_robot" description="Komodo2 Robot">
-	<xacro:property name="M_PI" value="3.1415926535897931" />
-    
-  
-<link name="base_footprint"/>
-  
- <joint name="base_footprint_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link"/>
-    <origin xyz="0.00 0.00 0.1275" rpy="0.0 0.0 0.0"/>
-  </joint> 
 
+<robot
+  name="komodo2">
   <link
     name="base_link">
     <inertial>
       <origin
-        xyz="0.0030152 0.00057861 0.0749"
+        xyz="0.0265371254582772 0.000242403640172173 0.0501704404394482"
         rpy="0 0 0" />
       <mass
-        value="20.0058" />
+        value="1.70660108565618" />
       <inertia
-        ixx="0.025582"
-        ixy="0.0010034"
-        ixz="-0.0041152"
-        iyy="0.086418"
-        iyz="-3.8058E-05"
-        izz="0.091994" />
+        ixx="0.0285642304866605"
+        ixy="-0.000201185394992359"
+        ixz="-0.000317415309478303"
+        iyy="0.0639136623858303"
+        iyz="-1.60880321018346E-06"
+        izz="0.07625494098217" />
     </inertial>
     <visual>
       <origin
@@ -33,12 +24,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo2_description/mesh/base_link.STL" />
+          filename="package://komodo2/meshes/base.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.79216 0.81961 0.93333 1" />
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
@@ -47,248 +38,32 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo2_description/mesh/base_link.STL" />
+          filename="package://komodo2/meshes/base.STL" />
       </geometry>
     </collision>
   </link>
-
   <link
-    name="rear_left_wheel_link">
-    <inertial>
-      <origin
-        xyz="9.8684E-07 -9.3003E-05 -1.8753E-05"
-        rpy="0 0 0" />
-      <mass
-        value="2.6829" />
-      <inertia
-        ixx="0.012758"
-        ixy="8.7952E-09"
-        ixz="-1.0406E-07"
-        iyy="0.023277"
-        iyz="2.0115E-06"
-        izz="0.012755" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://komodo2_description/mesh/wheel_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="${M_PI/2} 0 0" />
-      <geometry>
-	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
-	  <cylinder  length="0.05" radius="0.127"/> 
-      </geometry>
-    </collision>
-  </link>
+    name="footprint_link" />
   <joint
-    name="rear_left_wheel_joint"
-    type="continuous">
+    name="footprint_joint"
+    type="fixed">
     <origin
-      xyz="-0.165 0.18955 0"
+      xyz="0 -0.00349999999999995 -0.126"
       rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
-      link="rear_left_wheel_link" />
+      link="footprint_link" />
     <axis
-      xyz="0 1 0" />
+      xyz="0 0 0" />
   </joint>
   <link
-    name="front_left_wheel_link">
-    <inertial>
-      <origin
-        xyz="9.8687E-07 -9.3003E-05 -1.8753E-05"
-        rpy="0 0 0" />
-      <mass
-        value="2.6829" />
-      <inertia
-        ixx="0.012758"
-        ixy="8.7932E-09"
-        ixz="-1.0406E-07"
-        iyy="0.023277"
-        iyz="2.0115E-06"
-        izz="0.012755" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://komodo2_description/mesh/wheel_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="${M_PI/2} 0 0" />
-      <geometry>
-	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
-	  <cylinder  length="0.05" radius="0.127"/> 
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="front_left_wheel_joint"
-    type="continuous">
-    <origin
-      xyz="0.165 0.18955 0"
-      rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="front_left_wheel_link" />
-    <axis
-      xyz="0 1 0" />
-  </joint>
-  <link
-    name="rear_right_wheel_link">
-    <inertial>
-      <origin
-        xyz="-9.8675E-07 9.3004E-05 -1.8753E-05"
-        rpy="0 0 0" />
-      <mass
-        value="2.6829" />
-      <inertia
-        ixx="0.012758"
-        ixy="8.801E-09"
-        ixz="1.0405E-07"
-        iyy="0.023277"
-        iyz="-2.0115E-06"
-        izz="0.012755" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://komodo2_description/mesh/wheel_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="${M_PI/2} 0 0" />
-      <geometry>
-	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
-	  <cylinder  length="0.05" radius="0.127"/> 
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="rear_right_wheel_joint"
-    type="continuous">
-    <origin
-      xyz="-0.165 -0.18955 0"
-      rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="rear_right_wheel_link" />
-    <axis
-      xyz="0 1 0" />
-  </joint>
-  <link
-    name="front_right_wheel_link">
-    <inertial>
-      <origin
-        xyz="-9.867E-07 9.3004E-05 -1.8753E-05"
-        rpy="0 0 0" />
-      <mass
-        value="2.6829" />
-      <inertia
-        ixx="0.012758"
-        ixy="8.8036E-09"
-        ixz="1.0405E-07"
-        iyy="0.023277"
-        iyz="-2.0115E-06"
-        izz="0.012755" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://komodo2_description/mesh/wheel_link.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="${M_PI/2} 0 0" />
-      <geometry>
-	<!--  <mesh filename="package://komodo2_description/mesh/wheel_link.STL" /> -->
-	  <cylinder  length="0.05" radius="0.127"/> 
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="front_right_wheel_joint"
-    type="continuous">
-    <origin
-      xyz="0.165 -0.18955 0"
-      rpy="0 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="front_right_wheel_link" />
-    <axis
-      xyz="0 1 0" />
-  </joint>
-  <link
-    name="laser_link" >
-    <visual>
-      <origin
-        xyz="0 0 0.02291"
-        rpy="0 0 0" />
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-      <geometry>
-        <mesh
-          filename="package://komodo2_description/mesh/laser_link.STL" />
-      </geometry>
-      <material
-        name="">
-      </material>
-    </visual>
-  </link>
+    name="laser_link" />
   <joint
     name="laser_joint"
     type="fixed">
     <origin
-      xyz="0.2205 0 0.145"
+      xyz="0.233497501055752 0 0.141334654748157"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -298,47 +73,32 @@
       xyz="0 0 0" />
   </joint>
   <link
-    name="front_camera_link" />
+    name="front_cam_link" />
   <joint
-    name="rgb_camera_joint"
+    name="front_cam_joint"
     type="fixed">
     <origin
-      xyz="0.25425 0.0875 0.1"
+      xyz="0.257250027816762 0.0875000000000053 0.1"
       rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
-      link="camera_link" />
+      link="front_cam_link" />
     <axis
       xyz="0 0 0" />
   </joint>
   <link
-    name="depth_camera_link" />
+    name="depth_cam_link" />
   <joint
-    name="depth_camera_joint"
+    name="depth_cam_joint"
     type="fixed">
     <origin
-      xyz="0.25525 0.0006082 0.063584"
+      xyz="0.262250027816762 0.00102830288238904 0.0635000000000002"
       rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
-      link="depth_camera_link" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
-  <link
-    name="rear_urf_link" />
-  <joint
-    name="rear_urf_joint"
-    type="fixed">
-    <origin
-      xyz="-0.2745 0 0.108"
-      rpy="0 0 3.1416" />
-    <parent
-      link="base_link" />
-    <child
-      link="rear_urf_link" />
+      link="depth_cam_link" />
     <axis
       xyz="0 0 0" />
   </joint>
@@ -348,12 +108,27 @@
     name="right_urf_joint"
     type="fixed">
     <origin
-      xyz="-0.029313 -0.13725 0.13851"
-      rpy="0 -2.0713E-16 -1.5708" />
+      xyz="-0.0225419326154781 -0.137249999999995 0.138101776066688"
+      rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
       link="right_urf_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="rear_urf_link" />
+  <joint
+    name="rear_urf_joint"
+    type="fixed">
+    <origin
+      xyz="-0.267499972183238 0.00022860000000516 0.1175936"
+      rpy="0 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_urf_link" />
     <axis
       xyz="0 0 0" />
   </joint>
@@ -363,8 +138,8 @@
     name="left_urf_joint"
     type="fixed">
     <origin
-      xyz="-0.029313 0.13725 0.13851"
-      rpy="0 2.0713E-16 1.5708" />
+      xyz="-0.0220847326154781 0.137250000000005 0.138101776066688"
+      rpy="0 0 0" />
     <parent
       link="base_link" />
     <child
@@ -372,71 +147,216 @@
     <axis
       xyz="0 0 0" />
   </joint>
- 
-<joint name="depth_camera_rgb_joint" type="fixed">
-      <origin xyz="0 0.0185 0" rpy="0 0 0"/>
-      <parent link="depth_camera_link"/>
-      <child link="depth_camera_rgb_frame" />
-    </joint>
-    
-    <link name="depth_camera_rgb_frame">
-      <inertial>
-	<mass value="0.001" />
-	<origin xyz="0 0 0" />
-	<inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-	  iyy="0.0001" iyz="0.0"
-	  izz="0.0001" />
-	</inertial>
-      </link>   
-      <joint name="depth_camera_rgb_optical_joint" type="fixed">
-	<origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-	<parent link="depth_camera_rgb_frame" />
-	<child link="depth_camera_rgb_optical_frame" />
-      </joint>
-      
-      <link name="depth_camera_rgb_optical_frame">
-	<inertial>
-	  <mass value="0.001" />
-	  <origin xyz="0 0 0" />
-	  <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-	    iyy="0.0001" iyz="0.0"
-	    izz="0.0001" />
-	  </inertial>
-	</link>
-
-
-	
-	
-	<joint name="depth_camera_depth_joint" type="fixed">
-	  <origin xyz="0 0.0445 0" rpy="0 0 0" />
-	  <parent link="depth_camera_link" />
-	  <child link="depth_camera_depth_frame" />
-	</joint>
-	
-	<link name="depth_camera_depth_frame">
-	  <inertial>
-	    <mass value="0.001" />
-	    <origin xyz="0 0 0" />
-	    <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-	      iyy="0.0001" iyz="0.0"
-	      izz="0.0001" />
-	    </inertial>
-	  </link>
-	  
-	  <joint name="depth_camera_depth_optical_joint" type="fixed">
-	    <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-	    <parent link="depth_camera_depth_frame" />
-	    <child link="depth_camera_depth_optical_frame" />
-	  </joint>
-	  <link name="depth_camera_depth_optical_frame">
-	    <inertial>
-	      <mass value="0.001" />
-	      <origin xyz="0 0 0" />
-	      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-		iyy="0.0001" iyz="0.0"
-		izz="0.0001" />
-	      </inertial>
-	    </link>  
-	
-	
+  <link
+    name="front_left_wheel_link">
+    <inertial>
+      <origin
+        xyz="1.06542009199739E-05 0.00115773372814759 -1.501840532905E-05"
+        rpy="0 0 0" />
+      <mass
+        value="2.68204072018496" />
+      <inertia
+        ixx="0.0127575754327221"
+        ixy="1.06323698473979E-06"
+        ixz="1.32400044989008E-06"
+        iyy="0.0232771977739384"
+        iyz="-1.70158762992046E-06"
+        izz="0.0127565430134399" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.173999999999995 0.1869 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="rear_left_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.33001065420092 0.00115773372814756 -1.50184053290035E-05"
+        rpy="0 0 0" />
+      <mass
+        value="2.68204072018496" />
+      <inertia
+        ixx="0.0127575754327221"
+        ixy="1.06323698473982E-06"
+        ixz="1.32400044989004E-06"
+        iyy="0.0232771977739384"
+        iyz="-1.70158762992044E-06"
+        izz="0.0127565430134399" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rear_left_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.156000000000005 0.1869 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_left_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="front_right_wheel_link">
+    <inertial>
+      <origin
+        xyz="1.06542009198907E-05 0.374957733728148 -1.50184053290484E-05"
+        rpy="0 0 0" />
+      <mass
+        value="2.68204072018496" />
+      <inertia
+        ixx="0.0127575754327221"
+        ixy="1.0632369847399E-06"
+        ixz="1.3240004498902E-06"
+        iyy="0.0232771977739384"
+        iyz="-1.70158762992054E-06"
+        izz="0.0127565430134399" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.173999999999995 -0.1869 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="rear_right_wheel_link">
+    <inertial>
+      <origin
+        xyz="0.33001065420092 0.374957733728148 -1.50184053290297E-05"
+        rpy="0 0 0" />
+      <mass
+        value="2.68204072018496" />
+      <inertia
+        ixx="0.0127575754327221"
+        ixy="1.06323698473987E-06"
+        ixz="1.32400044989002E-06"
+        iyy="0.0232771977739384"
+        iyz="-1.70158762992054E-06"
+        izz="0.0127565430134399" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://komodo2/meshes/wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rear_right_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.156000000000005 -0.1869 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="rear_right_wheel_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
 </robot>

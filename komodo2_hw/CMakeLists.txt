@@ -19,10 +19,10 @@ catkin_package(
   LIBRARIES komodo2_hw
   CATKIN_DEPENDS
         bms_interface
-        ric_interface
         roboteq_control
-  DEPENDS
-        Boost
+        ric_interface
+DEPENDS
+    Boost
 #  DEPENDS system_lib
 )
 
@@ -32,15 +32,15 @@ include_directories(
 )
 
  add_executable(${PROJECT_NAME}_node
-         src/komodo2_hw.cpp
-         include/komodo2_hw.h
+                src/komodo2_hw.cpp
+                include/komodo2_hw.h
          src/komodo2_hw_node.cpp
-         src/battery_pub.cpp
-         include/battery_pub.h
          src/ricboard_pub.cpp
          include/ricboard_pub.h
          src/roboteq_diff_drive.cpp
-         include/roboteq_diff_drive.h)
+         include/roboteq_diff_drive.h
+         src/battery_pub.cpp
+         include/battery_pub.h)
 
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 

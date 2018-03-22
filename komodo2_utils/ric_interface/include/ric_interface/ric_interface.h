@@ -13,7 +13,7 @@
 #include <string.h>
 #include <iostream>
 
-namespace ric_interface
+namespace ric
 {
     class RicInterface
     {

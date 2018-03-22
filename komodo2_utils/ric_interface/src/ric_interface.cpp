@@ -2,7 +2,7 @@
 #include <ric_interface/ric_interface.h>
 
 
-namespace ric_interface
+namespace ric
 {
     RicInterface::RicInterface()
     {
@@ -62,8 +62,8 @@ namespace ric_interface
                 return "ULTRASONIC";
             case protocol::Type::IMU:
                 return "IMU";
-            case protocol::Type::LASER:
-                return "LASER";
+            case protocol::Type::POTENTIO:
+                return "POTENTIO";
             case protocol::Type::GPS:
                 return "GPS";
             case protocol::Type::EMERGENCY_ALARM:
@@ -133,12 +133,31 @@ namespace ric_interface
                 }
                 case (int)protocol::Type::ULTRASONIC:
                 {
-                    protocol::ultrasonic ultrasonic_pkg;
-                    Communicator::fromBytes(pkg_buff_, sizeof(protocol::ultrasonic), ultrasonic_pkg);
-                    if (ultrasonic_pkg.type == (uint8_t)protocol::Type::ULTRASONIC)
+                    protocol::ultrasonic urf_pkg;
+                    Communicator::fromBytes(pkg_buff_, sizeof(protocol::ultrasonic), urf_pkg);
+                    if (urf_pkg.type == (uint8_t)protocol::Type::ULTRASONIC)
                     {
-                        sensors_state_.ultrasonic = ultrasonic_pkg;
-                        //fprintf(stderr, "ultrasonic: %d\n", ultrasonic_pkg.distance_mm);
+                        switch (urf_pkg.id)
+                        {
+			    case protocol::ultrasonic::ID_RIGHT:
+                            {
+                                sensors_state_.urf_right = urf_pkg;
+                                break;
+                            }
+
+                            case protocol::ultrasonic::ID_REAR:
+                            {
+                                sensors_state_.urf_rear = urf_pkg;
+                                break;
+                            }
+                            
+                            case protocol::ultrasonic::ID_LEFT:
+                            {
+                                sensors_state_.urf_left = urf_pkg;
+                                break;
+                            }
+                        }
+                        //printf(stderr, "ultrasonic: %d\n", urf_pkg.distance_mm);
                     }
                     break;
                 }
@@ -168,14 +187,14 @@ namespace ric_interface
                     }
                     break;
                 }
-                case (int)protocol::Type::LASER:
+                case (int)protocol::Type::POTENTIO:
                 {
-                    protocol::laser laser_pkg;
-                    Communicator::fromBytes(pkg_buff_, sizeof(protocol::laser), laser_pkg);
-                    if (laser_pkg.type == (uint8_t)protocol::Type::LASER)
+                    protocol::potentio potentio_pkg;
+                    Communicator::fromBytes(pkg_buff_, sizeof(protocol::potentio), potentio_pkg);
+                    if (potentio_pkg.type == (uint8_t)protocol::Type::POTENTIO)
                     {
-                        sensors_state_.laser = laser_pkg;
-                        //fprintf(stderr, "laser dist: %d\n", sensors_state_.laser.distance_mm);
+                        sensors_state_.potentio = potentio_pkg;
+                        //fprintf(stderr, "potentio dist: %d\n", sensors_state_.potentio.distance_mm);
                     }
                     break;
                 }

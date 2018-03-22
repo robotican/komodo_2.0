@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-namespace ric_interface
+namespace ric
 {
     namespace protocol
     {
@@ -12,7 +12,7 @@ namespace ric_interface
             KEEP_ALIVE = 100,
             LOGGER = 101,
             ULTRASONIC = 102,
-            LASER = 103,
+            POTENTIO = 103,
             IMU = 104,
             GPS = 105,
             SERVO = 106,
@@ -77,11 +77,15 @@ namespace ric_interface
         {
             ultrasonic() { type = (uint8_t)Type::ULTRASONIC; }
             uint16_t distance_mm = 0;
+
+            const static uint8_t ID_RIGHT = 1;
+            const static uint8_t ID_REAR = 2;
+            const static uint8_t ID_LEFT = 3;
         };
 
-        struct laser : sensor
+        struct potentio : sensor
         {
-            laser() { type = (uint8_t)Type::LASER; }
+            potentio() { type = (uint8_t)Type::POTENTIO; }
             uint16_t distance_mm = 0;
         };
 
@@ -112,6 +116,7 @@ namespace ric_interface
             float satellites = 0;
             uint8_t date_time = 0; //UTC hundredths of a second
         };
+
 
         struct servo : actuator
         {

@@ -7,15 +7,15 @@
 
 #include "protocol.h"
 
-namespace ric_interface
+namespace ric
 {
     struct sensors_state
     {
         protocol::logger logger;
         protocol::error error;
-        protocol::ultrasonic ultrasonic;
+        protocol::ultrasonic urf_rear, urf_right, urf_left;
         protocol::imu imu;
-        protocol::laser laser;
+        protocol::potentio potentio;
         protocol::gps gps;
         protocol::emergency_alarm emrgcy_alarm;
     };

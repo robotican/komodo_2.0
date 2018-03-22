@@ -33,7 +33,6 @@ namespace komodo2_hw
     {
         ros::Duration period = ros::Time::now() - prev_time_;
         roboteq_.read(period);
-        ric_.read(period);
     }
 
     void Komodo2HW::write()

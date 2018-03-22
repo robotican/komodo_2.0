@@ -5,7 +5,7 @@ void SerialCom::connect(std::string port, int baudrate) {
     baudrate_ = baudrate;
     file_handle_ = ::open(port.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK);
     if (file_handle_ < 0)
-        throw ric_interface::ConnectionExeption("[ric_interface]: Failed to open RIC board port");
+        throw ric::ConnectionExeption("[ric_interface]: Failed to open RIC board port");
 
     /* sleep for 10ms and then clear serial buffer */
     usleep(10000);
@@ -13,7 +13,7 @@ void SerialCom::connect(std::string port, int baudrate) {
 
     /* Check if the file descriptor is pointing to a TTY device or not */
     if (!isatty(file_handle_))
-        throw ric_interface::ConnectionExeption("[ric_interface]: RIC Board port is not a tty device");
+        throw ric::ConnectionExeption("[ric_interface]: RIC Board port is not a tty device");
 
     setAttributes();
 }
@@ -22,7 +22,7 @@ void SerialCom::setAttributes() {
     struct termios tty;
 
     if (tcgetattr(file_handle_, &tty) < 0)
-        throw ric_interface::ConnectionExeption("[ric_interface]: Failed to get RIC board port attributes");
+        throw ric::ConnectionExeption("[ric_interface]: Failed to get RIC board port attributes");
 
     cfsetospeed(&tty, (speed_t) baudrate_);
     cfsetispeed(&tty, (speed_t) baudrate_);
@@ -42,7 +42,7 @@ void SerialCom::setAttributes() {
     tty.c_cc[VMIN] = 1;
     tty.c_cc[VTIME] = 1;
     if (tcsetattr(file_handle_, TCSANOW, &tty) != 0)
-        throw ric_interface::ConnectionExeption("[ric_interface]: Failed to set RIC board port attributes");
+        throw ric::ConnectionExeption("[ric_interface]: Failed to set RIC board port attributes");
 
     tcflush(file_handle_, TCIOFLUSH);
 }

@@ -13,7 +13,7 @@
 
 
 
-namespace ric_interface
+namespace ric
 {
     typedef uint8_t byte;
     class Communicator

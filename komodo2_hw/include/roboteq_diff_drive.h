@@ -27,9 +27,9 @@ private:
 
     std::string roboteq_port_;
     std::string right_rear_wheel_joint_,
-                left_rear_wheel_joint_,
-                right_front_wheel_joint_,
-                left_front_wheel_joint_;
+            left_rear_wheel_joint_,
+            right_front_wheel_joint_,
+            left_front_wheel_joint_;
     int roboteq_baud_ = 0;
     bool load_roboteq_hw_ = false;
     /* if first time, subtract previous values */

@@ -8,11 +8,11 @@
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "armadillo2_hw_node");
+    ros::init(argc, argv, "komodo2_hw_node");
     ros::NodeHandle nh;
 
-    komodo2_hw::Komodo2HW armadillo_hw(nh);
-    controller_manager::ControllerManager controller_manager(&armadillo_hw);
+    komodo2_hw::Komodo2HW komodo(nh);
+    controller_manager::ControllerManager controller_manager(&komodo);
 
     ros::AsyncSpinner asyncSpinner(THREADS_NUM);
     asyncSpinner.start();
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-        armadillo_hw.read();
+        komodo.read();
 
         ros::Duration(1.0 / (2.0 * LOOP_HZ)).sleep();
 
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
         controller_manager.update(ros::Time::now(), duration);
         last_time = ros::Time::now();
 
-        armadillo_hw.write();
+        komodo.write();
 
         ros::Duration(1.0 / (2.0 * LOOP_HZ)).sleep();
 

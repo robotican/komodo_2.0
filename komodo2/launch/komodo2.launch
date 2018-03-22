@@ -11,9 +11,10 @@
     <arg name="y" default="0.0"/>
     <arg name="z" default="0.0"/>
     <arg name="Y" default="0.0" />
+    <arg name="moveit" default="false"/>
+    <arg name="rgb_cam" default="false"/>
+    <arg name="depth_cam" default="false"/>
     <arg name="lidar" default="false"/>
-    <arg name="rgb_camera" default="false"/>
-    <arg name="depth_camera" default="false"/>
     <arg name="gmapping" default="false"/>
     <arg name="hector_slam" default="false"/>
     <arg name="amcl" default="false"/>
@@ -21,15 +22,25 @@
     <arg name="map" default="map.yaml" doc="pre-saved map path"/>
     <arg name="move_base" default="false"/>
     <arg name="robot_localization" default="false"/>
+    <arg name="teleop" default="false" doc="allow komodo2 joy teleop"/>
 
     <!--uncommon settings-->
+    <arg name="joy_dev" default="/dev/input/js0"/>
+    <arg name="joy_profile" default="xbox"/>
     <arg name="twist_mux" default="true"/>
     
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
     
-    <include file="$(find komodo2_control)/launch/komodo2_controllers.launch" />
-        
+    <node name="komodo2_services_node" pkg="komodo2_services" type="komodo2_services_node" respawn="false" output="screen" />
+    
     <include file="$(find espeak_ros)/launch/espeak_ros.launch" />
+    
+    <group if="$(arg teleop)" >
+        <include file="$(find komodo2_teleop)/launch/komodo2_teleop.launch">
+            <arg name="joy_dev" value="$(arg joy_dev)"/>
+            <arg name="joy_profile" value="$(arg joy_profile)"/>
+        </include>
+    </group>
     
     <group if="$(arg have_map)">
         <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)" />
@@ -50,16 +61,15 @@
     <group if="$(arg gazebo)">
          <env name="GAZEBO_MODEL_PATH" value="$(find komodo2_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
          <param name="robot_description" command="$(find xacro)/xacro '$(find komodo2_description)/urdf/komodo2_gazebo.xacro' --inorder 
-                kinect2:=true
-                kinect2_hz:=30.0
-                kinect2_hd:=false
-                kinect2_qhd:=true
+                depth_cam:=$(arg depth_cam)
+                rgb_cam:=$(arg rgb_cam)
                 urf:=true
                 imu:=true
                 gps:=true
-                lidar:=true
-                softkinetic:=true" />
+                lidar:=true" />
         
+        <include file="$(find komodo2_control)/launch/komodo2_gazebo_controllers.launch" />
+
 	<include file="$(find gazebo_ros)/launch/empty_world.launch">	    
               <arg name="world_name" value="$(arg world_name)"/>
 	      <arg name="gui" value="true"/>	     
@@ -72,18 +82,21 @@
     <group unless="$(arg gazebo)">
         <param name="robot_description" command="$(find xacro)/xacro '$(find komodo2_description)/urdf/komodo2.xacro' --inorder" />
         <include file="$(find komodo2_hw)/launch/komodo2_hw.launch" />
-                
-        <group if="$(arg softkinetic)">
-            <include file="$(find softkinetic_camera)/launch/softkinetic_camera_ds325.launch" />
+        
+        <include file="$(find komodo2_control)/launch/komodo2_hw_controllers.launch" />
+        
+        <group if="$(arg depth_cam)">
+<!--            <include file="$(find softkinetic_camera)/launch/softkinetic_camera_ds325.launch" />-->
         </group>
     
-        <group if="$(arg kinect)">
-            <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+        <group if="$(arg rgb_cam)">
+<!--            <include file="$(find usb_cams)/launch/front_cam.launch" />-->
         </group>
                 
         <group if="$(arg lidar)">
             <include file="$(find lidar_urg_node)/launch/lidar.launch" />
         </group>
+        
     </group>
     
     <group if="$(arg twist_mux)">
@@ -110,6 +123,11 @@
             <arg name="Y" value="$(arg Y)"/>
 	</include>
     </group>
+    
+    <group if="$(arg moveit)">
+        <include file="$(find komodo2_moveit_config)/launch/move_group.launch" />
+    </group>
+    
     
     <group if="$(arg move_base)">
         <include file="$(find komodo2_navigation)/launch/move_base.launch" />
