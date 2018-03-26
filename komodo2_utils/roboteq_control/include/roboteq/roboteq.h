@@ -149,6 +149,8 @@ private:
     /// URDF information about robot
     urdf::Model model;
 
+    Motor *front_right_m, *front_left_m;
+
     /// ROS Control interfaces
     //hardware_interface::JointStateInterface joint_state_interface;
     //hardware_interface::VelocityJointInterface velocity_joint_interface;

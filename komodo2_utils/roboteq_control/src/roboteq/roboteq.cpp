@@ -59,8 +59,8 @@ Roboteq::Roboteq(const ros::NodeHandle &nh, const ros::NodeHandle &private_nh, s
     else
     {
         //ROS_WARN("No joint list!");
-        joint_list.push_back("right_wheel_joint");
-        joint_list.push_back("left_wheel_joint");
+        joint_list.push_back("rear_left_wheel_joint");
+        joint_list.push_back("rear_right_wheel_joint");
         private_nh.setParam("joint", joint_list);
     }
     // Disable ECHO
@@ -95,6 +95,9 @@ Roboteq::Roboteq(const ros::NodeHandle &nh, const ros::NodeHandle &private_nh, s
         //mMotor[motor_name] = new Motor(private_mNh, serial, motor_name, number);
         mMotor.push_back(new Motor(private_mNh, serial, motor_name, number));
     }
+
+    front_left_m = new Motor(private_mNh, serial, "front_left_wheel_joint", 3);
+    front_right_m = new Motor(private_mNh, serial, "front_right_wheel_joint", 4);
 
     // Launch initialization input/output
     for(int i = 0; i < 6; ++i)
@@ -206,6 +209,7 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
     // Initialize the diagnostic from the primitive object
     initializeDiagnostic();
 
+
     if (!model.initParam("/robot_description")){
         //ROS_ERROR("Failed to parse urdf file");
     }
@@ -243,6 +247,13 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
         diagnostic_updater.add(*(motor));
         //ROS_DEBUG_STREAM("Motor [" << motor->getName() << "] Registered");
     }
+
+    joint_state_interface.registerHandle(front_left_m->joint_state_handle);
+    joint_state_interface.registerHandle(front_right_m->joint_state_handle);
+
+    velocity_joint_interface.registerHandle(front_left_m->joint_handle);
+    velocity_joint_interface.registerHandle(front_right_m->joint_handle);
+
 
     //ROS_DEBUG_STREAM("Send all Constraint configuration");
 
@@ -388,6 +399,11 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
 
         mMotor[i]->position = mMotor[i]->position - first_read_pos_[i];
     }
+
+    //simulate reading of front wheels
+    front_left_m->position = mMotor[0]->position - first_read_pos_[0];
+    front_right_m->position = mMotor[1]->position - first_read_pos_[1];
+
     if (first_read_)
         first_read_ = false;
 

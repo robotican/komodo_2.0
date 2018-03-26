@@ -74,14 +74,6 @@ void RicboardPub::loop()
             ric_dead_timer_.stop();
             ric_pub_timer_.start();
 
-            /* if emergecy pin disconnected, shutdown. ric will also kill torso */
-            if (ric_.getSensorsState().emrgcy_alarm.is_on)
-            {
-                speakMsg("emergency, shutting down", 1);
-                ROS_ERROR("[komodo2_hw/ricboard_pub]: EMERGENCY PIN DISCONNECTED, shutting down...");
-                ros::shutdown();
-                exit(EXIT_FAILURE);
-            }
             if (ric_.readLoggerMsg(logger_msg, logger_val))
                 ROS_INFO("[komodo2_hw/ricboard_pub]: ric logger is saying: '%s', value: %i", logger_msg.c_str(), logger_val);
             if (ric_.readErrorMsg(err_msg))

@@ -12,12 +12,9 @@ namespace ric
             KEEP_ALIVE = 100,
             LOGGER = 101,
             ULTRASONIC = 102,
-            POTENTIO = 103,
-            IMU = 104,
-            GPS = 105,
-            SERVO = 106,
-            EMERGENCY_ALARM = 107,
-            ERROR = 108
+            IMU = 103,
+            GPS = 104,
+            ERROR = 105
         };
 
         enum class ErrCode
@@ -67,11 +64,6 @@ namespace ric
         {
         };
 
-        struct emergency_alarm : sensor
-        {
-            emergency_alarm() { type = (uint8_t)Type::EMERGENCY_ALARM; }
-            bool is_on = false;
-        };
 
         struct ultrasonic : sensor
         {
@@ -81,12 +73,6 @@ namespace ric
             const static uint8_t ID_RIGHT = 1;
             const static uint8_t ID_REAR = 2;
             const static uint8_t ID_LEFT = 3;
-        };
-
-        struct potentio : sensor
-        {
-            potentio() { type = (uint8_t)Type::POTENTIO; }
-            uint16_t distance_mm = 0;
         };
 
         struct imu : sensor
@@ -115,13 +101,6 @@ namespace ric
             float heading = 0;
             float satellites = 0;
             uint8_t date_time = 0; //UTC hundredths of a second
-        };
-
-
-        struct servo : actuator
-        {
-            servo() { type = (uint8_t)Type::SERVO; }
-            uint16_t cmd = 0; //servo command 1000-2000
         };
     }
 }

@@ -15,9 +15,7 @@ namespace ric
         protocol::error error;
         protocol::ultrasonic urf_rear, urf_right, urf_left;
         protocol::imu imu;
-        protocol::potentio potentio;
         protocol::gps gps;
-        protocol::emergency_alarm emrgcy_alarm;
     };
 }
 

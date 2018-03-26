@@ -24,7 +24,7 @@ namespace komodo2_hw
 
         ric_.startLoop();
 
-        ROS_INFO("[armadillo2_hw]: armadillo hardware interface loaded successfully");
+        ROS_INFO("[komodo2_hw]: komodo hardware interface loaded successfully");
         espeak_pub_ = node_handle_->advertise<std_msgs::String>("/espeak_node/speak_line", 10);
         speakMsg("i am ready", 1);
     }

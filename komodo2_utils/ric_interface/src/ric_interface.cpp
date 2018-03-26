@@ -62,12 +62,8 @@ namespace ric
                 return "ULTRASONIC";
             case protocol::Type::IMU:
                 return "IMU";
-            case protocol::Type::POTENTIO:
-                return "POTENTIO";
             case protocol::Type::GPS:
                 return "GPS";
-            case protocol::Type::EMERGENCY_ALARM:
-                return "EMERGENCY_ALARM";
         }
         return NULL;
     }
@@ -187,17 +183,6 @@ namespace ric
                     }
                     break;
                 }
-                case (int)protocol::Type::POTENTIO:
-                {
-                    protocol::potentio potentio_pkg;
-                    Communicator::fromBytes(pkg_buff_, sizeof(protocol::potentio), potentio_pkg);
-                    if (potentio_pkg.type == (uint8_t)protocol::Type::POTENTIO)
-                    {
-                        sensors_state_.potentio = potentio_pkg;
-                        //fprintf(stderr, "potentio dist: %d\n", sensors_state_.potentio.distance_mm);
-                    }
-                    break;
-                }
                 case (int)protocol::Type::GPS:
                 {
                     protocol::gps gps_pkg;
@@ -206,17 +191,6 @@ namespace ric
                     {
                         sensors_state_.gps = gps_pkg;
                         //fprintf(stderr,"gps lat: %f, lon: %f\n", sensors_state_.gps.lat, sensors_state_.gps.lon);
-                    }
-                    break;
-                }
-                case (int)protocol::Type::EMERGENCY_ALARM:
-                {
-                    protocol::emergency_alarm emrg_pkg;
-                    Communicator::fromBytes(pkg_buff_, sizeof(protocol::emergency_alarm), emrg_pkg);
-                    if (emrg_pkg.type == (uint8_t)protocol::Type::EMERGENCY_ALARM)
-                    {
-                        sensors_state_.emrgcy_alarm = emrg_pkg;
-                        //fprintf(stderr,"alarm state: %i\n", sensors_state_.emrgcy_alarm.is_on);
                     }
                     break;
                 }
@@ -262,8 +236,4 @@ namespace ric
         }
     }
 
-    void RicInterface::writeCmd(const protocol::actuator &actu_pkg, size_t size, protocol::Type type)
-    {
-        comm_.write(actu_pkg, size);
-    }
 }

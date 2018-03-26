@@ -1,0 +1,27 @@
+joint_names_list: ['arm_rotation1_joint', 'arm_rotation2_joint', 'arm_shoulder1_joint', 'arm_shoulder2_joint', 'arm_shoulder3_joint', 'arm_wrist_joint']
+
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 20  
+
+arm_trajectory_controller:
+  type: position_velocity_controllers/JointTrajectoryController
+  joints:
+     - rotation1_joint
+     - shoulder1_joint 
+     - shoulder2_joint 
+     - rotation2_joint 
+     - shoulder3_joint 
+     - wrist_joint 
+  constraints:
+      goal_time: 4.0
+      stopped_velocity_tolerance: 0.05
+      rotation1_joint: {trajectory: 0.1, goal: 0.1}
+      shoulder1_joint: {trajectory: 0.1, goal: 0.1}
+      shoulder2_joint: {trajectory: 0.1, goal: 0.1}
+      rotation2_joint: {trajectory: 0.1, goal: 0.1}
+      shoulder3_joint: {trajectory: 0.1, goal: 0.1}
+      wrist_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.1
+  state_publish_rate:  50
+  action_monitor_rate: 50
