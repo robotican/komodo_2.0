@@ -92,16 +92,30 @@ sudo apt-get -y install ros-kinetic-rtabmap-ros
 sudo apt-get -y install jstest-gtk
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 
-# install intel camera drivers #
-##################################################################TODO
-
-
-
-# install komodo2 ric interface #
+# komodo2 ric interface #
 printf "${WHITE_TXT}\nInstalling ric interface...\n${NO_COLOR}"
 cd ~/catkin_ws/src/komodo2/komodo2/third_party_files/
 sudo dpkg -i ros-kinetic-ric-interface_0.0.0-0xenial_amd64.deb
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
+
+# realsense depth camera #
+if [ "$INSTALL_HW_COMPS" = true ] ; then
+    printf "${WHITE_TXT}\nInstalling depth camera...\n${NO_COLOR}"
+    cd ~/catkin_ws/src/
+    wget https://github.com/intel-ros/realsense/archive/2.0.1.tar.gz
+    tar -xvzf 2.0.1.tar.gz     
+    rm 2.0.1.tar.gz     
+    wget https://github.com/IntelRealSense/librealsense/archive/v2.8.1.tar.gz
+    tar -xvzf v2.8.1.tar.gz
+    rm v2.8.1.tar.gz
+    sudo apt-get -y install libusb-1.0-0-dev pkg-config libgtk-3-dev
+    sudo apt-get -y install libglfw3-dev                                                                                                                                                
+    cd librealsense-2.8.1                                                                                                                                                               
+    mkdir build && cd build               
+    cmake ../  
+    sudo make uninstall && make clean && make -j8 && sudo make install
+    printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
+fi
 
 # usb rules #
 if [ "$INSTALL_HW_COMPS" = true ] ; then
@@ -110,7 +124,7 @@ if [ "$INSTALL_HW_COMPS" = true ] ; then
     sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/49-teensy.rules /etc/udev/rules.d
     sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/hokuyo.rules /etc/udev/rules.d/
     sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/bms_battery.rules /etc/udev/rules.d
-    sudo cp ~/catkin_ws/src/komodo2/komodo2_utils/libfreenect2/platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/
+    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/99-realsense-libusb.rules /etc/udev/rules.d
     sudo udevadm control --reload-rules && udevadm trigger
     printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 fi

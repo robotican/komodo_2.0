@@ -82,11 +82,11 @@
         <include file="$(find komodo2_hw)/launch/komodo2_hw.launch" />
                 
         <group if="$(arg depth_cam)">
-<!--            <include file="$(find softkinetic_camera)/launch/softkinetic_camera_ds325.launch" />-->
+            <include file="$(find intel_d435)/launch/d435.launch" />
         </group>
     
         <group if="$(arg rgb_cam)">
-<!--            <include file="$(find usb_cams)/launch/front_cam.launch" />-->
+            <include file="$(find usb_cams)/launch/front_cam.launch" />
         </group>
                 
         <group if="$(arg lidar)">
