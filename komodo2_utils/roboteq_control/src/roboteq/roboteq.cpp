@@ -400,12 +400,16 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
         mMotor[i]->position = mMotor[i]->position - first_read_pos_[i];
     }
 
-    //simulate reading of front wheels
-    front_left_m->position = mMotor[0]->position - first_read_pos_[0];
-    front_right_m->position = mMotor[1]->position - first_read_pos_[1];
-
     if (first_read_)
-        first_read_ = false;
+    {
+        //simulate reading of front wheels
+        front_left_m->position = mMotor[0]->position - first_read_pos_[0];
+        front_right_m->position = mMotor[1]->position - first_read_pos_[1];
+	first_read_ = false;
+    }
+
+   
+
 
     // Read data from GPIO
     if(_isGPIOreading)
