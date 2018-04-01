@@ -254,6 +254,9 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
     velocity_joint_interface.registerHandle(front_left_m->joint_handle);
     velocity_joint_interface.registerHandle(front_right_m->joint_handle);
 
+    front_left_m->setupLimits(model);
+    front_right_m->setupLimits(model);
+
 
     //ROS_DEBUG_STREAM("Send all Constraint configuration");
 
@@ -394,21 +397,19 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
         // Read and decode vector
         mMotor[i]->readVector(motors[idx]);
 
-        if (first_read_)
+        if (first_read_[i])
+        {
             first_read_pos_[i] = mMotor[i]->position;
+            first_read_[i] = false;
+        }
 
         mMotor[i]->position = mMotor[i]->position - first_read_pos_[i];
     }
 
-    if (first_read_)
-    {
-        //simulate reading of front wheels
-        front_left_m->position = mMotor[0]->position - first_read_pos_[0];
-        front_right_m->position = mMotor[1]->position - first_read_pos_[1];
-	first_read_ = false;
-    }
+    //simulate front wheels
+    front_left_m->position = mMotor[0]->position;
+    front_right_m->position = mMotor[1]->position;
 
-   
 
 
     // Read data from GPIO
