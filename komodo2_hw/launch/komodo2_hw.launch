@@ -22,7 +22,7 @@
 
         <!--battery management system-->
         <param name="load_battery_hw" value="true" />
-        <param name="show_warnings" value="true" />
+        <param name="show_warnings" value="false" />
         <param name="low_batt_val" value="20" /><!--low battery warning value (precentage). -1 to disable-->
         <param name="batt_port" value="/dev/komodo2/BMS" />
 
