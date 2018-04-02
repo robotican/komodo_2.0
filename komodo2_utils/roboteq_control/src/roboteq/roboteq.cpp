@@ -59,8 +59,8 @@ Roboteq::Roboteq(const ros::NodeHandle &nh, const ros::NodeHandle &private_nh, s
     else
     {
         //ROS_WARN("No joint list!");
-        joint_list.push_back("rear_left_wheel_joint");
         joint_list.push_back("rear_right_wheel_joint");
+        joint_list.push_back("rear_left_wheel_joint");
         private_nh.setParam("joint", joint_list);
     }
     // Disable ECHO
@@ -96,8 +96,9 @@ Roboteq::Roboteq(const ros::NodeHandle &nh, const ros::NodeHandle &private_nh, s
         mMotor.push_back(new Motor(private_mNh, serial, motor_name, number));
     }
 
-    front_left_m = new Motor(private_mNh, serial, "front_left_wheel_joint", 3);
-    front_right_m = new Motor(private_mNh, serial, "front_right_wheel_joint", 4);
+    front_right_m = new Motor(private_mNh, serial, "front_right_wheel_joint", 3);
+    front_left_m = new Motor(private_mNh, serial, "front_left_wheel_joint", 4);
+
 
     // Launch initialization input/output
     for(int i = 0; i < 6; ++i)
@@ -248,14 +249,14 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
         //ROS_DEBUG_STREAM("Motor [" << motor->getName() << "] Registered");
     }
 
-    joint_state_interface.registerHandle(front_left_m->joint_state_handle);
     joint_state_interface.registerHandle(front_right_m->joint_state_handle);
+    joint_state_interface.registerHandle(front_left_m->joint_state_handle);
 
-    velocity_joint_interface.registerHandle(front_left_m->joint_handle);
     velocity_joint_interface.registerHandle(front_right_m->joint_handle);
+    velocity_joint_interface.registerHandle(front_left_m->joint_handle);
 
-    front_left_m->setupLimits(model);
     front_right_m->setupLimits(model);
+    front_left_m->setupLimits(model);
 
 
     //ROS_DEBUG_STREAM("Send all Constraint configuration");
@@ -407,8 +408,8 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
     }
 
     //simulate front wheels
-    front_left_m->position = mMotor[0]->position;
-    front_right_m->position = mMotor[1]->position;
+    front_right_m->position = mMotor[0]->position;
+    front_left_m->position = mMotor[1]->position;
 
 
 
