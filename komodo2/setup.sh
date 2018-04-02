@@ -98,7 +98,7 @@ cd ~/catkin_ws/src/komodo2/komodo2/third_party_files/
 sudo dpkg -i ros-kinetic-ric-interface_0.0.0-0xenial_amd64.deb
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 
-# realsense depth camera #
+# realsense depth camera #sudo /etc/init.d/udev restart
 if [ "$INSTALL_HW_COMPS" = true ] ; then
     printf "${WHITE_TXT}\nInstalling depth camera...\n${NO_COLOR}"
     cd ~/catkin_ws/src/
