@@ -59,15 +59,15 @@
         xyz="9.8684E-07 -9.3003E-05 -1.8753E-05"
         rpy="0 0 0" />
       <mass
-        value="2.6829" />
+        value="1.8524" />
       <inertia
-        ixx="0.012758"
-        ixy="8.7952E-09"
-        ixz="-1.0406E-07"
-        iyy="0.023277"
-        iyz="2.0115E-06"
-        izz="0.012755" />
-    </inertial>
+        ixx="0.0069046"
+        ixy="-3.8717E-08"
+        ixz="2.0707E-07"
+        iyy="0.17"
+        iyz="-1.0124E-07"
+        izz="0.0069054" />
+      </inertial>
     <visual>
       <origin
         xyz="0 0 0"
@@ -104,6 +104,9 @@
       link="rear_left_wheel_link" />
     <axis
       xyz="0 1 0" />
+    <limit
+      effort="0.4"
+      velocity="10.0" />
   </joint>
   <link
     name="front_left_wheel_link">
@@ -112,15 +115,15 @@
         xyz="9.8687E-07 -9.3003E-05 -1.8753E-05"
         rpy="0 0 0" />
       <mass
-        value="2.6829" />
+        value="1.8524" />
       <inertia
-        ixx="0.012758"
-        ixy="8.7932E-09"
-        ixz="-1.0406E-07"
-        iyy="0.023277"
-        iyz="2.0115E-06"
-        izz="0.012755" />
-    </inertial>
+        ixx="0.0069046"
+        ixy="-3.8717E-08"
+        ixz="2.0707E-07"
+        iyy="0.17"
+        iyz="-1.0124E-07"
+        izz="0.0069054" />
+      </inertial>
     <visual>
       <origin
         xyz="0 0 0"
@@ -157,6 +160,9 @@
       link="front_left_wheel_link" />
     <axis
       xyz="0 1 0" />
+    <limit
+      effort="0.4"
+      velocity="10.0" />
   </joint>
   <link
     name="rear_right_wheel_link">
@@ -165,14 +171,14 @@
         xyz="-9.8675E-07 9.3004E-05 -1.8753E-05"
         rpy="0 0 0" />
       <mass
-        value="2.6829" />
+        value="1.8524" />
       <inertia
-        ixx="0.012758"
-        ixy="8.801E-09"
-        ixz="1.0405E-07"
-        iyy="0.023277"
-        iyz="-2.0115E-06"
-        izz="0.012755" />
+        ixx="0.0069046"
+        ixy="-3.8717E-08"
+        ixz="-2.0707E-07"
+        iyy="0.17"
+        iyz="1.0124E-07"
+        izz="0.0069054" />
     </inertial>
     <visual>
       <origin
@@ -210,6 +216,9 @@
       link="rear_right_wheel_link" />
     <axis
       xyz="0 1 0" />
+    <limit
+      effort="0.4"
+      velocity="10.0" />
   </joint>
   <link
     name="front_right_wheel_link">
@@ -218,14 +227,14 @@
         xyz="-9.867E-07 9.3004E-05 -1.8753E-05"
         rpy="0 0 0" />
       <mass
-        value="2.6829" />
+        value="1.8524" />
       <inertia
-        ixx="0.012758"
-        ixy="8.8036E-09"
-        ixz="1.0405E-07"
-        iyy="0.023277"
-        iyz="-2.0115E-06"
-        izz="0.012755" />
+        ixx="0.0069046"
+        ixy="-3.8717E-08"
+        ixz="-2.0707E-07"
+        iyy="0.17"
+        iyz="1.0124E-07"
+        izz="0.0069054" />
     </inertial>
     <visual>
       <origin
@@ -263,6 +272,9 @@
       link="front_right_wheel_link" />
     <axis
       xyz="0 1 0" />
+    <limit
+      effort="0.4"
+      velocity="10.0" />
   </joint>
   <link
     name="laser_link" />
@@ -278,6 +290,9 @@
       link="laser_link" />
     <axis
       xyz="0 0 0" />
+    <limit
+      effort="0.4"
+      velocity="10.0" />
   </joint>
   <link
     name="rgb_cam_link" />
