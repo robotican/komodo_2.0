@@ -411,7 +411,7 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
 
     //simulate front wheels
     front_right_m->velocity = mMotor[0]->velocity;
-    front_left_m->velocity = mMotor[1]->position;
+    front_left_m->velocity = mMotor[1]->velocity;
 
     front_right_m->position = mMotor[0]->position;
     front_left_m->position = mMotor[1]->position;
