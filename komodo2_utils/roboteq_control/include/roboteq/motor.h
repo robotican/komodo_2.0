@@ -178,7 +178,7 @@ protected:
 public:
     double position;
 
-private:
+public:
     //Initialization object
     //NameSpace for bridge controller
     ros::NodeHandle mNh;
