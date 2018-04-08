@@ -117,7 +117,7 @@ Roboteq::Roboteq(const ros::NodeHandle &nh, const ros::NodeHandle &private_nh, s
     // Add subscriber stop
     sub_stop = private_mNh.subscribe("emergency_stop", 1, &Roboteq::stop_Callback, this);
     // Initialize the peripheral publisher
-    //pub_peripheral = private_mNh.advertise<roboteq_control::Peripheral>("peripheral", 10,
+    //  pub_peripheral = private_mNh.advertise<roboteq_control::Peripheral>("peripheral", 10,
     //            boost::bind(&Roboteq::connectionCallback, this, _1), boost::bind(&Roboteq::connectionCallback, this, _1));
 
 }
@@ -211,7 +211,8 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
     initializeDiagnostic();
 
 
-    if (!model.initParam("/robot_description")){
+    if (!model.initParam("/robot_description"))
+    {
         //ROS_ERROR("Failed to parse urdf file");
     }
     else
@@ -248,6 +249,7 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
         diagnostic_updater.add(*(motor));
         //ROS_DEBUG_STREAM("Motor [" << motor->getName() << "] Registered");
     }
+
 
     joint_state_interface.registerHandle(front_right_m->joint_state_handle);
     joint_state_interface.registerHandle(front_left_m->joint_state_handle);
@@ -408,10 +410,10 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
     }
 
     //simulate front wheels
+    front_right_m->readVector(motors[mMotor[0]->mNumber-1]);
+    front_left_m->readVector(motors[mMotor[1]->mNumber-1]);
     front_right_m->position = mMotor[0]->position;
     front_left_m->position = mMotor[1]->position;
-
-
 
     // Read data from GPIO
     if(_isGPIOreading)
