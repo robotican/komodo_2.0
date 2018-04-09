@@ -13,16 +13,18 @@
     <xacro:arg name="rgb_cam" default="false"/>
     <xacro:arg name="depth_cam" default="false"/>
     
-    <!-- softkinetic -->
-    <xacro:if value="$(arg rgb_cam)">
-<!--        <xacro:softkinetic_gazebo name="softkinetic_camera_rgb" ros_topic="softkinetic_camera"/> -->
-    </xacro:if>
-    
     <!-- cameras  -->
     <xacro:if value="$(arg rgb_cam)">
         <xacro:Camera name="rgb_cam" link="rgb_cam_link" image_width="640" image_height="480"
                       image_format="R8G8B8" clip_near="0.02" clip_far="300" />
         </xacro:if>
+        
+        <xacro:if value="$(arg depth_cam)">        
+           <xacro:include filename="$(find komodo2_gazebo)/macros/depth_cam.xacro" />
+
+            <xacro:softkinetic_gazebo name="softkinetic_rgb" ros_topic="softkinetic"/> 
+        </xacro:if>
+        
         
         
         <!-- Sonars -->
