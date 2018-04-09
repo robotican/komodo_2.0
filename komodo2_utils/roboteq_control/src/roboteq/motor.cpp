@@ -78,6 +78,7 @@ Motor::Motor(const ros::NodeHandle& nh, serial_controller *serial, string name, 
 
 void Motor::initializeMotor(bool load_from_board)
 {
+
     // Initialize parameters
     parameter->initConfigurator(load_from_board);
     // Load PID configuration from roboteq board
@@ -300,7 +301,7 @@ void Motor::stopMotor()
     // set to zero the reference
     mSerial->command("G ", std::to_string(mNumber) + " 0");
     // Stop motor [pag 222]
-    mSerial->command("MS", std::to_string(mNumber));
+    mSerial->command("MS ", std::to_string(mNumber));
 }
 
 void Motor::switchController(string type)
@@ -339,16 +340,20 @@ void Motor::writeCommandsToHardware(ros::Duration period)
     // Get encoder max speed parameter
     double max_rpm;
     mNh.getParam(mMotorName + "/max_speed", max_rpm);
+	//fprintf(stderr, "max_rpm: %f\n", max_rpm);
     // Build a command message
     long long int roboteq_velocity = static_cast<long long int>(to_rpm(command) / max_rpm * 1000.0);
+//fprintf(stderr, "command: %f \n", command);
+//fprintf(stderr, "to_rpm(command): %f\n", to_rpm(command));
 
     //ROS_INFO_STREAM("Velocity" << mNumber << " rad/s=" << command << "    roboteq=" << roboteq_velocity);
-
+//std::cout <<"G "<< std::to_string(mNumber) << " " << std::to_string(roboteq_velocity)<<std::endl<<std::endl;
     mSerial->command("G ", std::to_string(mNumber) + " " + std::to_string(roboteq_velocity));
 }
 
 void Motor::read(string data) {
     std::vector<std::string> fields;
+std::cout <<data<<std::endl;
     boost::split(fields, data, boost::algorithm::is_any_of(":"));
     // Decode list
     readVector(fields);
@@ -356,7 +361,7 @@ void Motor::read(string data) {
 
 void Motor::readVector(std::vector<std::string> fields) {
     double ratio, max_rpm;
-    // ROS_INFO_STREAM("Motor" << mNumber << " " << data);
+    //
 
 
     // Get ratio
@@ -376,17 +381,18 @@ void Motor::readVector(std::vector<std::string> fields) {
         memcpy(&_status, &status, sizeof(status));
 
         // reference command M <-> _MOTCMD [pag. 250]
-        double cmd = boost::lexical_cast<double>(fields[1]) * max_rpm / 1000.0;
+        double cmd = boost::lexical_cast<double>(fields[1])*2.0*M_PI/60.0;// * max_rpm / 1000.0;
         msg_control.reference = (cmd / ratio);
 
         // reference command F <-> _FEEDBK [pag. 244]
-        double vel = boost::lexical_cast<double>(fields[2]) * max_rpm / 1000.0;
+        double vel = boost::lexical_cast<double>(fields[2])*2.0*M_PI/60.0;// * max_rpm / 1000.0;
         msg_control.feedback = (vel / ratio);
         // Update velocity motor
         velocity = (vel / ratio);
 
+
         // reference command E <-> _LPERR [pag. 243]
-        double loop_error = boost::lexical_cast<double>(fields[3]) * max_rpm / 1000.0;
+        double loop_error = boost::lexical_cast<double>(fields[3]);// * max_rpm / 1000.0;
         msg_control.loop_error = (loop_error / ratio);
 
         // reference command P <-> _MOTPWR [pag. 255]
@@ -416,6 +422,7 @@ void Motor::readVector(std::vector<std::string> fields) {
         //ROS_INFO_STREAM("[" << mNumber << "] track:" << msg_status.track);
         //ROS_INFO_STREAM("[" << mNumber << "] volts:" << msg_status.volts << " - amps:" << msg_status.amps_motor);
         //ROS_INFO_STREAM("[" << mNumber << "] status:" << status << " - pos:"<< position << " - vel:" << velocity << " - torque:");
+//ROS_INFO_STREAM("[" << mNumber << "] status: " << (int)status << " - reference: "<< msg_control.reference << " - vel: " << velocity << " - ratio: "<<ratio);
     }
     catch (std::bad_cast& e)
     {

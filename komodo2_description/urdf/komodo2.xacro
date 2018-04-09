@@ -106,7 +106,7 @@
       xyz="0 1 0" />
     <limit
       effort="0.4"
-      velocity="10.0" />
+      velocity="32.0" />
   </joint>
   <link
     name="front_left_wheel_link">
@@ -162,7 +162,7 @@
       xyz="0 1 0" />
     <limit
       effort="0.4"
-      velocity="10.0" />
+      velocity="32.0" />
   </joint>
   <link
     name="rear_right_wheel_link">
@@ -218,7 +218,7 @@
       xyz="0 1 0" />
     <limit
       effort="0.4"
-      velocity="10.0" />
+      velocity="32.0" />
   </joint>
   <link
     name="front_right_wheel_link">
@@ -274,7 +274,7 @@
       xyz="0 1 0" />
     <limit
       effort="0.4"
-      velocity="10.0" />
+      velocity="32.0" />
   </joint>
   <link
     name="laser_link" />
@@ -292,7 +292,7 @@
       xyz="0 0 0" />
     <limit
       effort="0.4"
-      velocity="10.0" />
+      velocity="32.0" />
   </joint>
   <link
     name="rgb_cam_link" />
