@@ -102,11 +102,11 @@ printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 if [ "$INSTALL_HW_COMPS" = true ] ; then
     printf "${WHITE_TXT}\nInstalling depth camera...\n${NO_COLOR}"
     cd ~/catkin_ws/src/
-    wget https://github.com/intel-ros/realsense/archive/2.0.1.tar.gz
-    tar -xvzf 2.0.1.tar.gz     
+    wget https://github.com/intel-ros/realsense/archive/2.0.3.tar.gz
+    tar -xvzf 2.0.3.tar.gz
     rm 2.0.1.tar.gz     
-    wget https://github.com/IntelRealSense/librealsense/archive/v2.8.1.tar.gz
-    tar -xvzf v2.8.1.tar.gz
+    wget https://github.com/IntelRealSense/librealsense/archive/v2.10.3.tar.gz
+    tar -xvzf v2.10.3.tar.gz
     rm v2.8.1.tar.gz
     sudo apt-get -y install libusb-1.0-0-dev pkg-config libgtk-3-dev
     sudo apt-get -y install libglfw3-dev                                                                                                                                                

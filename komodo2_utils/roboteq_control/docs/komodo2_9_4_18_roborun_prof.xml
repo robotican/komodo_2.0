@@ -31,16 +31,13 @@
         <Nodes>
           <Node Text="Command Priorities">
             <Nodes>
-              <Node Text="Priority 1" Value="0">
+              <Node Text="Priority 1" Value="1">
                 <Nodes />
               </Node>
-              <Node Text="Priority 2" Value="1">
+              <Node Text="Priority 2" Value="0">
                 <Nodes />
               </Node>
               <Node Text="Priority 3" Value="2">
-                <Nodes />
-              </Node>
-              <Node Text="Priority 4" Value="4">
                 <Nodes />
               </Node>
               <Node Text="Default Command Value">
@@ -67,7 +64,7 @@
           </Node>
           <Node Text="Command Safety">
             <Nodes>
-              <Node Text="RS232 Safety">
+              <Node Text="USB/RS232 Safety">
                 <Nodes>
                   <Node Text="Watchdog (ms)" Value="1000">
                     <Nodes />
@@ -87,48 +84,6 @@
                     <Nodes />
                   </Node>
                 </Nodes>
-              </Node>
-            </Nodes>
-          </Node>
-        </Nodes>
-      </Node>
-      <Node Text="Spektrum RC">
-        <Nodes>
-          <Node Text="Command 1">
-            <Nodes>
-              <Node Text="Joystick Select" Value="1">
-                <Nodes />
-              </Node>
-              <Node Text="Input Min" Value="175">
-                <Nodes />
-              </Node>
-              <Node Text="Input Center" Value="512">
-                <Nodes />
-              </Node>
-              <Node Text="Input Max" Value="850">
-                <Nodes />
-              </Node>
-              <Node Text="Input Deadband" Value="5">
-                <Nodes />
-              </Node>
-            </Nodes>
-          </Node>
-          <Node Text="Command 2">
-            <Nodes>
-              <Node Text="Joystick Select" Value="2">
-                <Nodes />
-              </Node>
-              <Node Text="Input Min" Value="175">
-                <Nodes />
-              </Node>
-              <Node Text="Input Center" Value="512">
-                <Nodes />
-              </Node>
-              <Node Text="Input Max" Value="850">
-                <Nodes />
-              </Node>
-              <Node Text="Input Deadband" Value="5">
-                <Nodes />
               </Node>
             </Nodes>
           </Node>
@@ -170,6 +125,22 @@
               </Node>
             </Nodes>
           </Node>
+          <Node Text="CANOpen Transmission Type">
+            <Nodes>
+              <Node Text="TPDO 1 Transmission Type" Value="255">
+                <Nodes />
+              </Node>
+              <Node Text="TPDO 2 Transmission Type" Value="255">
+                <Nodes />
+              </Node>
+              <Node Text="TPDO 3 Transmission Type" Value="255">
+                <Nodes />
+              </Node>
+              <Node Text="TPDO 4 Transmission Type" Value="255">
+                <Nodes />
+              </Node>
+            </Nodes>
+          </Node>
           <Node Text="CANOpen Autostart" Value="0">
             <Nodes />
           </Node>
@@ -182,7 +153,7 @@
               <Node Text="Use" Value="18">
                 <Nodes />
               </Node>
-              <Node Text="Pulses/Rev" Value="420">
+              <Node Text="Pulses/Rev" Value="912">
                 <Nodes />
               </Node>
               <Node Text="Min Limit" Value="-2000000">
@@ -207,7 +178,7 @@
               <Node Text="Use" Value="34">
                 <Nodes />
               </Node>
-              <Node Text="Pulses/Rev" Value="420">
+              <Node Text="Pulses/Rev" Value="912">
                 <Nodes />
               </Node>
               <Node Text="Min Limit" Value="-2000000">
@@ -511,21 +482,21 @@
         <Nodes>
           <Node Text="PIn1" Value="">
             <Nodes>
-              <Node Text="Capture Type" Value="0">
+              <Node Text="Capture Type" Value="1">
                 <Nodes />
               </Node>
-              <Node Text="Input Use" Value="16">
+              <Node Text="Input Use" Value="17">
                 <Nodes />
               </Node>
               <Node Text="Range" Value="">
                 <Nodes>
-                  <Node Text="Input Min" Value="1000">
+                  <Node Text="Input Min" Value="1006">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Center" Value="1500">
+                  <Node Text="Input Center" Value="1546">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Max" Value="2000">
+                  <Node Text="Input Max" Value="2006">
                     <Nodes />
                   </Node>
                 </Nodes>
@@ -546,21 +517,21 @@
           </Node>
           <Node Text="PIn2" Value="">
             <Nodes>
-              <Node Text="Capture Type" Value="0">
+              <Node Text="Capture Type" Value="1">
                 <Nodes />
               </Node>
-              <Node Text="Input Use" Value="32">
+              <Node Text="Input Use" Value="33">
                 <Nodes />
               </Node>
               <Node Text="Range" Value="">
                 <Nodes>
-                  <Node Text="Input Min" Value="1000">
+                  <Node Text="Input Min" Value="1005">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Center" Value="1500">
+                  <Node Text="Input Center" Value="1547">
                     <Nodes />
                   </Node>
-                  <Node Text="Input Max" Value="2000">
+                  <Node Text="Input Max" Value="1947">
                     <Nodes />
                   </Node>
                 </Nodes>
@@ -767,6 +738,9 @@
               </Node>
             </Nodes>
           </Node>
+          <Node Text="Short Circuit Protection" Value="1">
+            <Nodes />
+          </Node>
           <Node Text="Brake Delay (ms)" Value="250">
             <Nodes />
           </Node>
@@ -792,7 +766,7 @@
               <Node Text="Amps Limit (A)" Value="200">
                 <Nodes />
               </Node>
-              <Node Text="Amps Trigger (A)" Value="200">
+              <Node Text="Amps Trigger (A)" Value="600">
                 <Nodes />
               </Node>
               <Node Text="Amps Trigger Delay (ms)" Value="500">
@@ -815,13 +789,13 @@
           </Node>
           <Node Text="Speed &amp;amp; Acceleration">
             <Nodes>
-              <Node Text="Max Speed (RPM)" Value="78">
+              <Node Text="Max Speed (RPM)" Value="220">
                 <Nodes />
               </Node>
-              <Node Text="Acceleration (RPM/s)" Value="1800">
+              <Node Text="Acceleration (RPM/s)" Value="5000">
                 <Nodes />
               </Node>
-              <Node Text="Decceleration (RPM/s)" Value="3200">
+              <Node Text="Decceleration (RPM/s)" Value="8000">
                 <Nodes />
               </Node>
             </Nodes>
@@ -831,7 +805,7 @@
           </Node>
           <Node Text="Closed Loop Parameters">
             <Nodes>
-              <Node Text="Position Mode Velocity (RPM)" Value="78">
+              <Node Text="Position Mode Velocity (RPM)" Value="156">
                 <Nodes />
               </Node>
               <Node Text="Turns Min to Max" Value="100">
@@ -840,7 +814,7 @@
               <Node Text="Proportional Gain" Value="50">
                 <Nodes />
               </Node>
-              <Node Text="Integral Gain" Value="45">
+              <Node Text="Integral Gain" Value="55">
                 <Nodes />
               </Node>
               <Node Text="Differential Gain" Value="0">
@@ -849,7 +823,7 @@
               <Node Text="Integrator Limit (%)" Value="100">
                 <Nodes />
               </Node>
-              <Node Text="Loop Error Detection" Value="2">
+              <Node Text="Loop Error Detection" Value="3">
                 <Nodes />
               </Node>
             </Nodes>
@@ -873,7 +847,7 @@
               <Node Text="Amps Limit (A)" Value="200">
                 <Nodes />
               </Node>
-              <Node Text="Amps Trigger (A)" Value="200">
+              <Node Text="Amps Trigger (A)" Value="600">
                 <Nodes />
               </Node>
               <Node Text="Amps Trigger Delay (ms)" Value="500">
@@ -896,13 +870,13 @@
           </Node>
           <Node Text="Speed &amp;amp; Acceleration">
             <Nodes>
-              <Node Text="Max Speed (RPM)" Value="78">
+              <Node Text="Max Speed (RPM)" Value="220">
                 <Nodes />
               </Node>
-              <Node Text="Acceleration (RPM/s)" Value="1800">
+              <Node Text="Acceleration (RPM/s)" Value="5000">
                 <Nodes />
               </Node>
-              <Node Text="Decceleration (RPM/s)" Value="3200">
+              <Node Text="Decceleration (RPM/s)" Value="8000">
                 <Nodes />
               </Node>
             </Nodes>
@@ -912,10 +886,10 @@
           </Node>
           <Node Text="Closed Loop Parameters">
             <Nodes>
-              <Node Text="Position Mode Velocity (RPM)" Value="78">
+              <Node Text="Position Mode Velocity (RPM)" Value="156">
                 <Nodes />
               </Node>
-              <Node Text="Position Turns Min to Max" Value="238094">
+              <Node Text="Position Turns Min to Max" Value="109649">
                 <Nodes />
               </Node>
               <Node Text="Proportional Gain" Value="50">
@@ -930,7 +904,7 @@
               <Node Text="Integrator Limit (%)" Value="100">
                 <Nodes />
               </Node>
-              <Node Text="Loop Error Detection" Value="2">
+              <Node Text="Loop Error Detection" Value="3">
                 <Nodes />
               </Node>
             </Nodes>

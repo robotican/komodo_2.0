@@ -163,6 +163,11 @@ void Roboteq::getRoboteqInformation()
 
 Roboteq::~Roboteq()
 {
+puts("Stopping motors");
+mSerial->command("G 1 0");
+mSerial->command("G 2 0");
+mSerial->command("MS 1");
+mSerial->command("MS 2");
     // ROS_INFO_STREAM("Script: " << script(false));
 }
 
@@ -235,6 +240,7 @@ void Roboteq::initializeInterfaces(hardware_interface::JointStateInterface &join
         //double position = 0;
         //ROS_DEBUG_STREAM("Motor [" << motor->getName() << "] reset position to: " << position);
         //motor->resetPosition(position);
+//bool stop_motor = mSerial->command("EX"); //set emergency
 
         // Stop motors
         /*ROS_ERROR("HERE");
@@ -331,14 +337,14 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
     }
     // motor command [pag. 250]
     string str_motor = mSerial->getQuery("M");
-    // ROS_INFO_STREAM("M =" << str_motor);
+   //  ROS_INFO_STREAM("M =" << str_motor);
     boost::split(fields, str_motor, boost::algorithm::is_any_of(":"));
     for(int i = 0; i < fields.size(); ++i) {
         motors[i].push_back(fields[i]);
     }
     // motor feedback [pag. 244]
     string str_feedback = mSerial->getQuery("F");
-    //ROS_INFO_STREAM("F =" << str_feedback);
+   // ROS_INFO_STREAM("F =" << str_feedback);
     boost::split(fields, str_feedback, boost::algorithm::is_any_of(":"));
     for(int i = 0; i < fields.size(); ++i) {
         motors[i].push_back(fields[i]);
@@ -415,6 +421,9 @@ void Roboteq::read(const ros::Time& time, const ros::Duration& period) {
 
     front_right_m->position = mMotor[0]->position;
     front_left_m->position = mMotor[1]->position;
+
+    front_right_m->effort = mMotor[0]->effort;
+    front_left_m->effort = mMotor[1]->effort;
 
     // Read data from GPIO
     if(_isGPIOreading)
@@ -515,6 +524,7 @@ bool Roboteq::prepareSwitch(const std::list<hardware_interface::ControllerInfo>&
 
 void Roboteq::doSwitch(const std::list<hardware_interface::ControllerInfo>& start_list, const std::list<hardware_interface::ControllerInfo>& stop_list)
 {
+puts("------------------------------ doSwitch");
     // Stop all controller in list
     for(std::list<hardware_interface::ControllerInfo>::const_iterator it = stop_list.begin(); it != stop_list.end(); ++it)
     {
