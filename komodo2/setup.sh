@@ -104,13 +104,13 @@ if [ "$INSTALL_HW_COMPS" = true ] ; then
     cd ~/catkin_ws/src/
     wget https://github.com/intel-ros/realsense/archive/2.0.3.tar.gz
     tar -xvzf 2.0.3.tar.gz
-    rm 2.0.1.tar.gz     
+    rm 2.0.3.tar.gz     
     wget https://github.com/IntelRealSense/librealsense/archive/v2.10.3.tar.gz
     tar -xvzf v2.10.3.tar.gz
-    rm v2.8.1.tar.gz
+    rm v2.10.3.tar.gz
     sudo apt-get -y install libusb-1.0-0-dev pkg-config libgtk-3-dev
     sudo apt-get -y install libglfw3-dev                                                                                                                                                
-    cd librealsense-2.8.1                                                                                                                                                               
+    cd librealsense-2.10.3                                                                                                                                                               
     mkdir build && cd build               
     cmake ../  
     sudo make uninstall && make clean && make -j8 && sudo make install
