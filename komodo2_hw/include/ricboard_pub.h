@@ -24,6 +24,10 @@
 #define RIC_WRITE_INTERVAL 0.05 //secs
 #define RIC_DEAD_TIMEOUT 1 //secs
 #define MAX_RIC_DISCONNECTIONS 5
+#define G_FORCE 9.80665
+#define HSV_URF_MIN_RANGE 0.3
+#define HSV_URF_MAX_RANGE 3.0
+#define HSV_URF_FOV 0.7f
 
 class RicboardPub
 {

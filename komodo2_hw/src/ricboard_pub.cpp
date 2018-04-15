@@ -121,35 +121,34 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     ric::sensors_state sensors = ric_.getSensorsState();
 
     /* publish ultrasonic */
-    /* publish ultrasonic */
     sensor_msgs::Range rear_range_msg;
     rear_range_msg.header.stamp = ros::Time::now();
     rear_range_msg.header.frame_id = "rear_urf_link";
-    rear_range_msg.min_range = 0.3;
-    rear_range_msg.max_range = 3.0;
+    rear_range_msg.min_range = HSV_URF_MIN_RANGE;
+    rear_range_msg.max_range = HSV_URF_MAX_RANGE;
     rear_range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
     rear_range_msg.range = sensors.urf_rear.distance_mm / 1000.0;
-    rear_range_msg.field_of_view = 0.7f;
+    rear_range_msg.field_of_view = HSV_URF_FOV;
     rear_urf_pub_.publish(rear_range_msg);
 
     sensor_msgs::Range right_urf_msg;
     right_urf_msg.header.stamp = ros::Time::now();
     right_urf_msg.header.frame_id = "right_urf_link";
-    right_urf_msg.min_range = 0.3;
-    right_urf_msg.max_range = 3.0;
+    right_urf_msg.min_range = HSV_URF_MIN_RANGE;
+    right_urf_msg.max_range = HSV_URF_MAX_RANGE;
     right_urf_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
     right_urf_msg.range = sensors.urf_right.distance_mm / 1000.0;
-    right_urf_msg.field_of_view = 0.7f;
+    right_urf_msg.field_of_view = HSV_URF_FOV;
     right_urf_pub_.publish(right_urf_msg);
 
     sensor_msgs::Range left_urf_msg;
     left_urf_msg.header.stamp = ros::Time::now();
     left_urf_msg.header.frame_id = "left_urf_link";
-    left_urf_msg.min_range = 0.3;
-    left_urf_msg.max_range = 3.0;
+    left_urf_msg.min_range = HSV_URF_MIN_RANGE;
+    left_urf_msg.max_range = HSV_URF_MAX_RANGE;
     left_urf_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
     left_urf_msg.range = sensors.urf_left.distance_mm / 1000.0;
-    left_urf_msg.field_of_view = 0.7f;
+    left_urf_msg.field_of_view = HSV_URF_FOV;
     left_urf_pub_.publish(left_urf_msg);
 
     /* publish imu */
@@ -163,12 +162,12 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     imu_msg.orientation.y = orientation_q.y();
     imu_msg.orientation.z = orientation_q.z();
     imu_msg.orientation.w = orientation_q.w();
-    imu_msg.angular_velocity.x = sensors.imu.gyro_x_rad;
-    imu_msg.angular_velocity.y = sensors.imu.gyro_y_rad;
+    imu_msg.angular_velocity.x = -1 * sensors.imu.gyro_x_rad;
+    imu_msg.angular_velocity.y = -1 * sensors.imu.gyro_y_rad;
     imu_msg.angular_velocity.z = sensors.imu.gyro_z_rad;
-    imu_msg.linear_acceleration.x = sensors.imu.accl_x_rad;
-    imu_msg.linear_acceleration.y = sensors.imu.accl_y_rad;
-    imu_msg.linear_acceleration.z = sensors.imu.accl_z_rad;
+    imu_msg.linear_acceleration.x = sensors.imu.accl_x_rad * G_FORCE;
+    imu_msg.linear_acceleration.y = sensors.imu.accl_y_rad * G_FORCE;
+    imu_msg.linear_acceleration.z = -1 * sensors.imu.accl_z_rad * G_FORCE;
     imu_msg.header.stamp = ros::Time::now();
     ric_imu_pub_.publish(imu_msg);
 
