@@ -163,15 +163,16 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     roll = -sensors.imu.pitch_rad;
     yaw = sensors.imu.yaw_rad - M_PI / 2;
 
-    ROS_INFO("ROLL %f, PITCH %f, YAW %f", roll * 180 / M_PI,
-             pitch * 180 / M_PI,
-             yaw * 180 / M_PI);
 
     //wrap to PI
     if (yaw > M_PI )
         yaw -= 2 * M_PI;
     else if (yaw < -M_PI)
         yaw += 2 * M_PI;
+
+    /*ROS_INFO("ROLL %f, PITCH %f, YAW %f", roll * 180 / M_PI,
+             pitch * 180 / M_PI,
+             yaw * 180 / M_PI);*/
 
     tf::Quaternion orientation_q = tf::createQuaternionFromRPY(roll,
                                                                pitch,
