@@ -8,7 +8,7 @@
     <node name="komodo2_hw_node" pkg="komodo2_hw" type="komodo2_hw_node" respawn="false" output="screen">
         
         <!--roboteq-->
-        <param name="load_roboteq_hw" value="false" />
+        <param name="load_roboteq_hw" value="true" />
         <param name="left_front_wheel_joint" value="left_front_wheel_joint" />
         <param name="right_front_wheel_joint" value="right_front_wheel_joint" />
         <param name="left_rear_wheel_joint" value="left_rear_wheel_joint" />
@@ -21,7 +21,7 @@
         <param name="ric_port" value="/dev/komodo2/RICBOARD" />
 
         <!--battery management system-->
-        <param name="load_battery_hw" value="false" />
+        <param name="load_battery_hw" value="true" />
         <param name="show_warnings" value="false" />
         <param name="low_batt_val" value="20" /><!--low battery warning value (precentage). -1 to disable-->
         <param name="batt_port" value="/dev/komodo2/BMS" />
