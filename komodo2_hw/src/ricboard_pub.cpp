@@ -32,7 +32,8 @@ RicboardPub::RicboardPub(ros::NodeHandle &nh)
         rear_urf_pub_ = nh.advertise<sensor_msgs::Range>("URF/rear", 10);
         right_urf_pub_ = nh.advertise<sensor_msgs::Range>("URF/right", 10);
         left_urf_pub_ = nh.advertise<sensor_msgs::Range>("URF/left", 10);
-        ric_imu_pub_ = nh.advertise<sensor_msgs::Imu>("IMU", 10);
+        ric_imu_pub_ = nh.advertise<sensor_msgs::Imu>("IMU/data", 10);
+        ric_mag_pub_ = nh.advertise<sensor_msgs::MagneticField>("IMU/magnetic", 10);
 
         ric_pub_timer_ = nh.createTimer(ros::Duration(RIC_PUB_INTERVAL), &RicboardPub::pubTimerCB, this);
         ric_dead_timer_ = nh.createTimer(ros::Duration(RIC_DEAD_TIMEOUT), &RicboardPub::ricDeadTimerCB, this);
@@ -155,21 +156,46 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     sensor_msgs::Imu imu_msg;
     imu_msg.header.stamp = ros::Time::now();
     imu_msg.header.frame_id = "base_link";
-    tf::Quaternion orientation_q = tf::createQuaternionFromRPY(sensors.imu.roll_rad,
-                                                               sensors.imu.pitch_rad,
-                                                               sensors.imu.yaw_rad);
+
+
+    double roll, pitch, yaw;
+    pitch = -sensors.imu.roll_rad;
+    roll = -sensors.imu.pitch_rad;
+    yaw = sensors.imu.yaw_rad - M_PI / 2;
+
+    ROS_INFO("ROLL %f, PITCH %f, YAW %f", roll * 180 / M_PI,
+             pitch * 180 / M_PI,
+             yaw * 180 / M_PI);
+
+    //wrap to PI
+    if (yaw > M_PI )
+        yaw -= 2 * M_PI;
+    else if (yaw < -M_PI)
+        yaw += 2 * M_PI;
+
+    tf::Quaternion orientation_q = tf::createQuaternionFromRPY(roll,
+                                                               pitch,
+                                                               yaw);
+
     imu_msg.orientation.x = orientation_q.x();
     imu_msg.orientation.y = orientation_q.y();
     imu_msg.orientation.z = orientation_q.z();
     imu_msg.orientation.w = orientation_q.w();
-    imu_msg.angular_velocity.x = -1 * sensors.imu.gyro_x_rad;
-    imu_msg.angular_velocity.y = -1 * sensors.imu.gyro_y_rad;
-    imu_msg.angular_velocity.z = sensors.imu.gyro_z_rad;
-    imu_msg.linear_acceleration.x = sensors.imu.accl_x_rad * G_FORCE;
-    imu_msg.linear_acceleration.y = sensors.imu.accl_y_rad * G_FORCE;
-    imu_msg.linear_acceleration.z = -1 * sensors.imu.accl_z_rad * G_FORCE;
-    imu_msg.header.stamp = ros::Time::now();
+    imu_msg.angular_velocity.x = -1 * sensors.imu.gyro_y_rad;
+    imu_msg.angular_velocity.y = -1 * sensors.imu.gyro_x_rad;
+    imu_msg.angular_velocity.z = -1 * sensors.imu.gyro_z_rad;
+    imu_msg.linear_acceleration.x = sensors.imu.accl_y_rad * G_FORCE;
+    imu_msg.linear_acceleration.y = sensors.imu.accl_x_rad * G_FORCE;
+    imu_msg.linear_acceleration.z = sensors.imu.accl_z_rad * G_FORCE;
     ric_imu_pub_.publish(imu_msg);
+
+    sensor_msgs::MagneticField mag_msg;
+    mag_msg.header.stamp = ros::Time::now();
+    mag_msg.header.frame_id = "base_link";
+    mag_msg.magnetic_field.x = sensors.imu.mag_x_rad;
+    mag_msg.magnetic_field.y = sensors.imu.mag_y_rad;
+    mag_msg.magnetic_field.z = sensors.imu.mag_z_rad;
+    ric_mag_pub_.publish(mag_msg);
 
     /* publish gps if data is available */
     if (sensors.gps.satellites > 0)

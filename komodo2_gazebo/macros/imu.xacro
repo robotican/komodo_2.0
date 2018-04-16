@@ -8,7 +8,7 @@
       <always_on>true</always_on>
       <update_rate>${hz}</update_rate>
       <visualize>false</visualize>
-      <topic>__default_topic__</topic>
+      <topic>IMU/data</topic>
       <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
         <topicName>${topic}</topicName>
         <bodyName>${link}</bodyName>
@@ -21,6 +21,18 @@
       <pose>0 0 0 0 0 0</pose>
     </sensor>
   </gazebo>
+  
+  <gazebo>
+        <plugin name="GazeboRosMagnetic" filename="libhector_gazebo_ros_magnetic.so">
+                <updateRate>50.0</updateRate>
+                <bodyName>${link}</bodyName>
+                <frameId>${link}</frameId>
+                <topicName>IMU/magnetic</topicName>
+                <offset>0 0 0</offset>
+                <drift>0.0 0.0 0.0</drift>
+                <gaussianNoise>1.3e-2 1.3e-2 1.3e-2</gaussianNoise>
+        </plugin>
+</gazebo>
 
 	</xacro:macro>
 

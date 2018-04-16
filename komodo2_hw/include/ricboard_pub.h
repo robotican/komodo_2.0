@@ -9,6 +9,7 @@
 #include <sensor_msgs/Range.h>
 #include <sensor_msgs/NavSatFix.h>
 #include <sensor_msgs/Imu.h>
+#include <sensor_msgs/MagneticField.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/String.h>
 #include <hardware_interface/joint_command_interface.h>
@@ -45,6 +46,7 @@ private:
             right_urf_pub_,
             left_urf_pub_;
     ros::Publisher ric_imu_pub_;
+    ros::Publisher ric_mag_pub_;
 
     ros::Timer ric_pub_timer_,
                ric_dead_timer_;
