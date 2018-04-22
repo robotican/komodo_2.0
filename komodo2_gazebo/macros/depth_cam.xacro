@@ -12,7 +12,7 @@
             <image>
                 <width>1280</width>
                 <height>800</height>
-                <format>R8G8B8</format>
+                <format>B8G8R8</format>
             </image>
             <depth_camera>
 
