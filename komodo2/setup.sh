@@ -2,12 +2,20 @@
 
 # installation file for komodo2 over ROS Kinetic and ubuntu 16.04 #
 
+# exit and notify immediately if a command exits with a non-zero status
+set -eb
+
 GREEN_TXT='\e[0;32m'
 WHITE_TXT='\e[1;37m'
 RED_TXT='\e[31m'
 NO_COLOR='\033[0m'
 LOGS_FOLDER_PATH="${HOME}/catkin_ws/src/setup_logs"
 INSTALL_HW_COMPS=false #deremine if this script will install komodo2 hardware drivers
+
+# get package folder path. this must be executed before other commands
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR && cd ..
+PKG_PATH=`pwd`
 
 printf "${WHITE_TXT}\n***Installing Komodo2 ROS-Kinetic Package***\n${NO_COLOR}"
 
@@ -94,7 +102,7 @@ printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 
 # komodo2 ric interface #
 printf "${WHITE_TXT}\nInstalling ric interface...\n${NO_COLOR}"
-cd ~/catkin_ws/src/komodo2/komodo2/third_party_files/
+cd $PKG_PATH/komodo2/third_party_files/
 sudo dpkg -i ros-kinetic-ric-interface_0.0.0-0xenial_amd64.deb
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 
@@ -120,12 +128,12 @@ fi
 # usb rules #
 if [ "$INSTALL_HW_COMPS" = true ] ; then
     printf "${WHITE_TXT}\nInstalling USB rules...\n${NO_COLOR}"
-    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/roboteq.rules /etc/udev/rules.d
-    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/49-teensy.rules /etc/udev/rules.d
-    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/hokuyo.rules /etc/udev/rules.d/
-    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/bms_battery.rules /etc/udev/rules.d
-    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/99-realsense-libusb.rules /etc/udev/rules.d
-    sudo cp ~/catkin_ws/src/komodo2/komodo2/rules/microsoft_webcam.rules /etc/udev/rules.d/
+    sudo cp $PKG_PATH/komodo2/rules/roboteq.rules /etc/udev/rules.d
+    sudo cp $PKG_PATH/komodo2/rules/49-teensy.rules /etc/udev/rules.d
+    sudo cp $PKG_PATH/komodo2/rules/hokuyo.rules /etc/udev/rules.d/
+    sudo cp $PKG_PATH/komodo2/rules/bms_battery.rules /etc/udev/rules.d
+    sudo cp $PKG_PATH/komodo2/rules/99-realsense-libusb.rules /etc/udev/rules.d
+    sudo cp $PKG_PATH/komodo2/rules/microsoft_webcam.rules /etc/udev/rules.d/
     sudo udevadm control --reload-rules && udevadm trigger
     printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 fi
