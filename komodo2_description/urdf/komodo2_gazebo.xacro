@@ -20,9 +20,12 @@
         </xacro:if>
         
         <xacro:if value="$(arg depth_cam)">        
-           <xacro:include filename="$(find komodo2_gazebo)/macros/depth_cam.xacro" />
-
-            <xacro:softkinetic_gazebo name="softkinetic_rgb" ros_topic="softkinetic"/> 
+            
+            
+           <xacro:include filename="$(find komodo2_gazebo)/macros/asus_xiton_pro_live_depth_cam.xacro" />
+         
+            
+            
         </xacro:if>
         
         

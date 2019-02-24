@@ -64,7 +64,7 @@ Motor::Motor(const ros::NodeHandle& nh, serial_controller *serial, string name, 
     pid_position = new MotorPIDConfigurator(nh, serial, mMotorName, "position", number);
 
     // Add a status motor publisher
-    //pub_status = mNh.advertise<roboteq_control::MotorStatus>(mMotorName + "/status", 10);
+    pub_status = mNh.advertise<roboteq_control::MotorStatus>(mMotorName + "/status", 10);
     //pub_control = mNh.advertise<roboteq_control::ControlStatus>(mMotorName + "/control", 10);
 
     // Add callback
@@ -430,7 +430,7 @@ void Motor::readVector(std::vector<std::string> fields) {
       return;
     }
     // Publish status motor
-    //pub_status.publish(msg_status);
+    pub_status.publish(msg_status);
     // Publish status control motor
     //pub_control.publish(msg_control);
 }

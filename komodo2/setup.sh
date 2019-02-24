@@ -96,9 +96,12 @@ sudo apt-get -y install ros-kinetic-serial
 sudo apt-get -y install espeak espeak-data libespeak-dev
 sudo apt-get -y install ros-kinetic-robot-localization
 sudo apt-get -y install ros-kinetic-trac-ik ros-kinetic-moveit-kinematics 
-sudo apt-get -y install ros-kinetic-urg-node 
 sudo apt-get -y install ros-kinetic-rtabmap-ros
 sudo apt-get -y install jstest-gtk
+sudo apt-get -y install ros-kinetic-lms1xx
+sudo apt-get -y install ros-kinetic-openni-camera
+sudo apt-get -y install ros-kinetic-openni-launch
+
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 
 # komodo2 ric interface #
@@ -106,25 +109,6 @@ printf "${WHITE_TXT}\nInstalling ric interface...\n${NO_COLOR}"
 cd $PKG_PATH/komodo2/third_party_files/
 sudo dpkg -i ros-kinetic-ric-interface_0.0.0-0xenial_amd64.deb
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
-
-# realsense depth camera #sudo /etc/init.d/udev restart
-if [ "$INSTALL_HW_COMPS" = true ] ; then
-    printf "${WHITE_TXT}\nInstalling depth camera...\n${NO_COLOR}"
-    cd ~/catkin_ws/src/
-    wget https://github.com/intel-ros/realsense/archive/2.0.3.tar.gz
-    tar -xvzf 2.0.3.tar.gz
-    rm 2.0.3.tar.gz     
-    wget https://github.com/IntelRealSense/librealsense/archive/v2.10.3.tar.gz
-    tar -xvzf v2.10.3.tar.gz
-    rm v2.10.3.tar.gz
-    sudo apt-get -y install libusb-1.0-0-dev pkg-config libgtk-3-dev
-    sudo apt-get -y install libglfw3-dev                                                                                                                                                
-    cd librealsense-2.10.3                                                                                                                                                               
-    mkdir build && cd build               
-    cmake ../  
-    sudo make uninstall && make clean && make -j8 && sudo make install
-    printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
-fi
 
 # usb rules #
 if [ "$INSTALL_HW_COMPS" = true ] ; then

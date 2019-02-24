@@ -3,7 +3,7 @@ global_frame: map
 rolling_window: false
 
 inflation_exploration:
-    inflation_radius: 0.01
+    inflation_radius: 0.25
 
 plugins: 
 - {name: external,            type: "costmap_2d::StaticLayer"}
