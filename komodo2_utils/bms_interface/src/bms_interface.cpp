@@ -84,6 +84,7 @@ namespace bms
         {
 
             read_len = ::read(file_handle_, &data_in, 1);
+           
             if (read_len != 1)
             {
                 bad_reads ++;
@@ -91,6 +92,7 @@ namespace bms
             }
             else
             {
+                // std::cout << "data_in: "<<(int)data_in<<std::endl;
                 //fprintf(stderr, "%c", data_in) ; /////////////////////////////////////////////////////////////////////////////////////////
                 if (first_read)
                 {

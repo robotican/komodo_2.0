@@ -173,6 +173,8 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     /*ROS_INFO("ROLL %f, PITCH %f, YAW %f", roll * 180 / M_PI,
              pitch * 180 / M_PI,
              yaw * 180 / M_PI);*/
+    
+   // std::cout << "ROLL: " << roll * 180 / M_PI << ", PITCH: " << pitch * 180 / M_PI << ", YAW: " << yaw * 180 / M_PI << std::endl;
 
     tf::Quaternion orientation_q = tf::createQuaternionFromRPY(roll,
                                                                pitch,
@@ -198,23 +200,26 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     mag_msg.magnetic_field.z = sensors.imu.mag_z_rad;
     ric_mag_pub_.publish(mag_msg);
 
-    /* publish gps if data is available */
-    if (sensors.gps.satellites > 0)
-    {
-        sensor_msgs::NavSatFix gps_msg;
+     sensor_msgs::NavSatFix gps_msg;
         sensor_msgs::NavSatStatus gps_status;
+    /* publish gps if data is available */
+    
+    if (sensors.gps.satellites > 0)
+     gps_status.status = sensor_msgs::NavSatStatus::STATUS_FIX;
+    else
+    gps_status.status = sensor_msgs::NavSatStatus::STATUS_NO_FIX;
+       
         gps_msg.header.stamp = ros::Time::now();
         gps_msg.header.frame_id = "base_link";
-        gps_status.status = sensor_msgs::NavSatStatus::STATUS_SBAS_FIX;
-        gps_status.status = sensor_msgs::NavSatStatus::SERVICE_GPS;
-
+        gps_status.service = sensor_msgs::NavSatStatus::SERVICE_GPS;
+        
+gps_msg.altitude = sensors.gps.alt;
         gps_msg.latitude = sensors.gps.lat;
         gps_msg.longitude = sensors.gps.lon;
         gps_msg.status = gps_status;
-        gps_msg.header.stamp = ros::Time::now();
 
         ric_gps_pub_.publish(gps_msg);
-    }
+    
 }
 
 

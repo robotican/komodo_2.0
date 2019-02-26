@@ -66,7 +66,7 @@ Roboteq::Roboteq(const ros::NodeHandle &nh, const ros::NodeHandle &private_nh, s
     // Disable ECHO
     mSerial->echo(false);
     // Disable Script and wait to load all parameters
-    mSerial->script(false);
+    mSerial->script(true);
 
 
     // Initialize Joints
