@@ -205,15 +205,14 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     /* publish gps if data is available */
     
     if (sensors.gps.satellites > 0)
-     gps_status.status = sensor_msgs::NavSatStatus::STATUS_FIX;
+        gps_status.status = sensor_msgs::NavSatStatus::STATUS_FIX;
     else
-    gps_status.status = sensor_msgs::NavSatStatus::STATUS_NO_FIX;
+        gps_status.status = sensor_msgs::NavSatStatus::STATUS_NO_FIX;
        
         gps_msg.header.stamp = ros::Time::now();
         gps_msg.header.frame_id = "base_link";
         gps_status.service = sensor_msgs::NavSatStatus::SERVICE_GPS;
-        
-gps_msg.altitude = sensors.gps.alt;
+        gps_msg.altitude = sensors.gps.alt;
         gps_msg.latitude = sensors.gps.lat;
         gps_msg.longitude = sensors.gps.lon;
         gps_msg.status = gps_status;
