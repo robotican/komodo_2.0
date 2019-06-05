@@ -276,27 +276,13 @@
       effort="0.4"
       velocity="32.0" />
   </joint>
-  <link name="laser_link" >
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://lms1xx/meshes/sick-lms1xx.stl" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    </link>
+  <link
+    name="laser_link" />
   <joint
     name="laser_joint"
     type="fixed">
     <origin
-      xyz="0.230497501055752 0 0.318"
+      xyz="0.233497501055752 0 0.141334654748157"
       rpy="0 0 0" />
     <parent
       link="base_link" />
@@ -307,7 +293,7 @@
     <limit
       effort="0.4"
       velocity="32.0" />
-  </joint>
+</joint>
   <link
     name="rgb_cam_link" />
   <joint

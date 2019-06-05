@@ -92,11 +92,7 @@
         </group>
         
         <group if="$(arg lidar)">
-            <node pkg="lms1xx" name="lms1xx" type="LMS1xx_node" output="screen">
-                <param name="host" value="169.254.230.219" />
-                <param name="frame_id" value="laser_link" />
-                <param name="publish_min_range_as_inf" value="false" />
-            </node>
+            <include file="$(find lidar_urg_node)/launch/lidar.launch" />            
         </group>
         
     </group>

@@ -2,6 +2,9 @@
 
 # installation file for komodo2 over ROS Kinetic and ubuntu 16.04 #
 
+# exit and notify immediately if a command exits with a non-zero status
+set -eb
+
 GREEN_TXT='\e[0;32m'
 WHITE_TXT='\e[1;37m'
 RED_TXT='\e[31m'
@@ -67,10 +70,6 @@ printf "${WHITE_TXT}\nInstalling 3rd party packages...\n${NO_COLOR}"
 sudo apt-get update
 sudo apt-get dist-upgrade 
 sudo apt-get upgrade 
-
-# exit and notify immediately if a command exits with a non-zero status
-set -eb
-
 sudo apt-get -y install ros-kinetic-controller-manager 
 sudo apt-get -y install ros-kinetic-control-toolbox  
 sudo apt-get -y install ros-kinetic-transmission-interface 
@@ -96,12 +95,11 @@ sudo apt-get -y install ros-kinetic-serial
 sudo apt-get -y install espeak espeak-data libespeak-dev
 sudo apt-get -y install ros-kinetic-robot-localization
 sudo apt-get -y install ros-kinetic-trac-ik ros-kinetic-moveit-kinematics 
+sudo apt-get -y install ros-kinetic-urg-node 
 sudo apt-get -y install ros-kinetic-rtabmap-ros
 sudo apt-get -y install jstest-gtk
-sudo apt-get -y install ros-kinetic-lms1xx
 sudo apt-get -y install ros-kinetic-openni-camera
 sudo apt-get -y install ros-kinetic-openni-launch
-
 printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"
 
 # komodo2 ric interface #
@@ -117,7 +115,6 @@ if [ "$INSTALL_HW_COMPS" = true ] ; then
     sudo cp $PKG_PATH/komodo2/rules/49-teensy.rules /etc/udev/rules.d
     sudo cp $PKG_PATH/komodo2/rules/hokuyo.rules /etc/udev/rules.d/
     sudo cp $PKG_PATH/komodo2/rules/bms_battery.rules /etc/udev/rules.d
-    sudo cp $PKG_PATH/komodo2/rules/99-realsense-libusb.rules /etc/udev/rules.d
     sudo cp $PKG_PATH/komodo2/rules/microsoft_webcam.rules /etc/udev/rules.d/
     sudo udevadm control --reload-rules && udevadm trigger
     printf "${GREEN_TXT}Done.\n\n${NO_COLOR}"

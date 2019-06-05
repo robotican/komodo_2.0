@@ -185,9 +185,9 @@ void RicboardPub::pubTimerCB(const ros::TimerEvent &event)
     imu_msg.angular_velocity.x = -1 * sensors.imu.gyro_y_rad;
     imu_msg.angular_velocity.y = -1 * sensors.imu.gyro_x_rad;
     imu_msg.angular_velocity.z = -1 * sensors.imu.gyro_z_rad;
-    imu_msg.linear_acceleration.x = sensors.imu.accl_y_rad * G_FORCE;
-    imu_msg.linear_acceleration.y = sensors.imu.accl_x_rad * G_FORCE;
-    imu_msg.linear_acceleration.z = sensors.imu.accl_z_rad * G_FORCE;
+    imu_msg.linear_acceleration.x = -sensors.imu.accl_y_rad * G_FORCE;
+    imu_msg.linear_acceleration.y = -sensors.imu.accl_x_rad * G_FORCE;
+    imu_msg.linear_acceleration.z = -sensors.imu.accl_z_rad * G_FORCE;
     ric_imu_pub_.publish(imu_msg);
 
     sensor_msgs::MagneticField mag_msg;
